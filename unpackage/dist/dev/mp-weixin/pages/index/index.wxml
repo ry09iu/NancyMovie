@@ -1,0 +1,1 @@
+<view class="container"><view class="header"><bw-swiper style="width:100%;" vue-id="8dd740cc-1" swiperList="{{swiperList}}" swiperType="{{true}}" textTip="{{true}}" w_h="0.675" bind:__l="__l"></bw-swiper></view><view class="content"><view class="hot-line"></view></view></view>
