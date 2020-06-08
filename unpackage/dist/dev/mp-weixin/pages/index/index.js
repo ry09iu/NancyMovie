@@ -94,7 +94,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   clSearch: function() {
-    return __webpack_require__.e(/*! import() | cool/ui/components/search/search */ "cool/ui/components/search/search").then(__webpack_require__.bind(null, /*! @/cool/ui/components/search/search.vue */ 62))
+    return __webpack_require__.e(/*! import() | cool/ui/components/search/search */ "cool/ui/components/search/search").then(__webpack_require__.bind(null, /*! @/cool/ui/components/search/search.vue */ 39))
   }
 }
 var render = function() {
@@ -134,7 +134,10 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
 
 
 
@@ -153,7 +156,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 var _index = _interopRequireDefault(__webpack_require__(/*! @/utils/luch-request/index.js */ 17));
-var _in_theaters = _interopRequireDefault(__webpack_require__(/*! @/data/in_theaters.js */ 30));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var bwSwiper = function bwSwiper() {__webpack_require__.e(/*! require.ensure | wxcomponents/bw-swiper/bw-swiper */ "wxcomponents/bw-swiper/bw-swiper").then((function () {return resolve(__webpack_require__(/*! @/wxcomponents/bw-swiper/bw-swiper.vue */ 33));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+var _in_theaters = _interopRequireDefault(__webpack_require__(/*! @/data/in_theaters.js */ 30));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var bwSwiper = function bwSwiper() {__webpack_require__.e(/*! require.ensure | wxcomponents/bw-swiper/bw-swiper */ "wxcomponents/bw-swiper/bw-swiper").then((function () {return resolve(__webpack_require__(/*! @/wxcomponents/bw-swiper/bw-swiper.vue */ 44));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 var http = new _index.default();var _default =
 {
   components: {
@@ -161,6 +164,11 @@ var http = new _index.default();var _default =
 
   data: function data() {
     return {
+      headerPaddingTop: 0,
+      headerSwiperHeight: '100%',
+      val1: "",
+      nextMargin: '36px',
+      previousMargin: '36px',
       href: 'https://uniapp.dcloud.io/component/README?id=uniui',
       swiperList: [{
         img: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg',
@@ -175,11 +183,12 @@ var http = new _index.default();var _default =
 
   },
   created: function created() {
+    this.getWindowHeight();
     var list = _in_theaters.default.inTheatersList.subjects;
     var swiperData = [];
     list.forEach(function (item) {
       if (item.images.large.indexOf("s_ratio_poster") > -1) {
-        item.images.large = item.images.large.replace("s_ratio_poster", "l_ratio_poster");
+        item.images.large = item.images.large.replace("s_ratio_poster", "l_ratio_poster").replace(".webp", ".jpg");
       }
       swiperData.push({
         id: item.id,
@@ -216,7 +225,29 @@ var http = new _index.default();var _default =
     // 	this.swiperList = swiperData;
     // });
   },
-  methods: {} };exports.default = _default;
+  methods: {
+    getWindowHeight: function getWindowHeight() {
+      var _this = this;
+      uni.getSystemInfo({
+        success: function success(res) {
+          var h = 70;
+          if (res.windowHeight > 700) {
+            var top = (res.windowHeight - 700) / 2;
+            if (res.windowHeight > 750) {
+              top = 25;
+            }
+            _this.headerPaddingTop = top;
+            h += top;
+          }
+          _this.headerSwiperHeight = res.windowHeight - h + 'px';
+          var width = (res.windowHeight - 100) * 0.675;
+          var margin = (res.windowWidth - width) / 2;
+          _this.nextMargin = margin > 0 ? margin + 'px' : '0px';
+          _this.previousMargin = _this.nextMargin;
+        } });
+
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

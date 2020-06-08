@@ -12,8 +12,12 @@
 		position: relative;
 
 		.cl-input {
-			border-radius: 70rpx !important;
+			// border-radius: 70rpx !important;
 			overflow: hidden;
+			background: #F5F6F8;
+			border: 0;
+			height: 80upx;
+			padding: 5upx 20upx;
 		}
 
 		&-btn {

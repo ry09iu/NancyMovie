@@ -1,9 +1,12 @@
 <template>
 	<view class="container">
-		<view class="header">
+		<view class="header" :style="{'padding-top':headerPaddingTop + 'px'}">
 			<cl-search v-model="val1" placeholder="搜索图片、文章、链接" @search="onSearch" :show-search-button="false">
 			</cl-search>
-			<bw-swiper :swiperList="swiperList" style="width:100%" swiperType w_h="0.675"></bw-swiper>
+			<view class="header-swiper" :style="{'height':headerSwiperHeight}">
+				<bw-swiper :swiperList="swiperList" style="width:100%" swiperType w_h="0.675" :previousMargin="previousMargin"
+				 :nextMargin="nextMargin"></bw-swiper>
+			</view>
 		</view>
 
 		<view class="content">
@@ -25,6 +28,11 @@
 		},
 		data() {
 			return {
+				headerPaddingTop: 0,
+				headerSwiperHeight: '100%',
+				val1: "",
+				nextMargin: '36px',
+				previousMargin: '36px',
 				href: 'https://uniapp.dcloud.io/component/README?id=uniui',
 				swiperList: [{
 					img: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg',
@@ -39,11 +47,12 @@
 			}
 		},
 		created: function() {
+			this.getWindowHeight();
 			let list = mockData.inTheatersList.subjects;
 			let swiperData = [];
 			list.forEach((item) => {
 				if (item.images.large.indexOf("s_ratio_poster") > -1) {
-					item.images.large = item.images.large.replace("s_ratio_poster", "l_ratio_poster");
+					item.images.large = item.images.large.replace("s_ratio_poster", "l_ratio_poster").replace(".webp", ".jpg");
 				}
 				swiperData.push({
 					id: item.id,
@@ -81,7 +90,27 @@
 			// });
 		},
 		methods: {
-
+			getWindowHeight() {
+				let _this = this;
+				uni.getSystemInfo({
+					success(res) {
+						let h = 70;
+						if (res.windowHeight > 700) {
+							let top = (res.windowHeight - 700) / 2;
+							if (res.windowHeight > 750) {
+								top = 25;
+							}
+							_this.headerPaddingTop = top;
+							h += top;
+						}
+						_this.headerSwiperHeight = res.windowHeight - h + 'px';
+						const width = (res.windowHeight - 100) * 0.675;
+						const margin = (res.windowWidth - width) / 2;
+						_this.nextMargin = margin > 0 ? margin + 'px' : '0px';
+						_this.previousMargin = _this.nextMargin;
+					}
+				});
+			}
 		}
 	}
 </script>
@@ -91,8 +120,14 @@
 		font-size: 14px;
 		line-height: 24px;
 	}
-	
+
 	.cl-search {
-		padding: 7px 18px !important;
+		padding: 14upx 50upx !important;
+	}
+
+	.header-swiper {
+		display: flex;
+		align-items: center;
+		width: 100%;
 	}
 </style>

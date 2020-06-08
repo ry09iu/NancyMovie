@@ -17,7 +17,7 @@
 		"useCompilerModule": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.9.2",
+	"libVersion": "2.11.1",
 	"appid": "wxf76fcac4ee2a5ca7",
 	"projectname": "NancyMovie",
 	"simulatorType": "wechat",

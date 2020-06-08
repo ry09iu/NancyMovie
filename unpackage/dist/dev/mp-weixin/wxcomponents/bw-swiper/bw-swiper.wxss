@@ -25,7 +25,7 @@
 /* 透明度 */
 /* 文章场景相关 */
 .cardSwiper .swiper-item {
-  width: 76% !important;
+  width: 86% !important;
   overflow: initial;
 }
 .cardSwiper .swiper-item > view {
@@ -33,16 +33,14 @@
   display: block;
   height: 100%;
   border-radius: 38rpx;
-  -webkit-transform: scale(0.75, 0.86);
-          transform: scale(0.75, 0.86);
+  -webkit-transform: scale(0.9, 0.8);
+          transform: scale(0.9, 0.8);
   opacity: 1;
   -webkit-transition: all 0.2s ease-in 0s;
   transition: all 0.2s ease-in 0s;
   overflow: hidden;
   box-sizing: border-box;
-}
-.cardSwiper .cur {
-  margin-left: 40rpx;
+  margin-left: 8.1%;
 }
 .cardSwiper .cur view {
   -webkit-transform: initial;
@@ -77,29 +75,40 @@
 .swiperContent {
   width: 100%;
 }
+.swiper-item-shade {
+  width: 100% !important;
+  height: 97.5% !important;
+  opacity: 0.5 !important;
+  position: absolute !important;
+  background: rgba(255, 255, 255, 0.3);
+  z-index: 99;
+  -webkit-transition: all 0.2s ease-in 0s;
+  transition: all 0.2s ease-in 0s;
+}
 .swiper-item-footer {
   position: absolute !important;
   left: 0;
-  bottom: 42px;
+  bottom: 84rpx;
   width: 100% !important;
   height: auto !important;
   background: #fff;
-  padding: 15px 16px;
+  padding: 30rpx 32rpx;
   z-index: 9;
-  box-shadow: 0 2px 16px 0 #e9ecef;
+  box-shadow: 0 4rpx 32rpx 0 #e9ecef;
 }
 .cardSwiper .cur .swiper-item-footer {
-  bottom: 12px;
+  bottom: 24rpx;
 }
 .footer-name {
-  font-size: 15px;
+  font-size: 30rpx;
   font-weight: bold;
 }
 .footer-info {
   border-radius: 0 !important;
-  margin-top: 11px;
-  font-size: 12px;
-  color: #AAAAAA;
+  margin-top: 22rpx;
+  line-height: 1.7;
+  font-size: 24rpx;
+  color: #B2B2B2;
 }
 .footer-rate {
   display: -webkit-box !important;
@@ -108,6 +117,6 @@
   -webkit-box-align: center !important;
   -webkit-align-items: center !important;
           align-items: center !important;
-  height: 20px !important;
+  height: 40rpx !important;
 }
 

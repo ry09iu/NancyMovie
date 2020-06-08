@@ -1603,8 +1603,11 @@ cl-button + cl-button {
   position: relative;
 }
 .cl-search__input .cl-input {
-  border-radius: 70rpx !important;
   overflow: hidden;
+  background: #F5F6F8;
+  border: 0;
+  height: 80rpx;
+  padding: 5rpx 20rpx;
 }
 .cl-search__input-btn {
   position: absolute;

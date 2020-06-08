@@ -4,12 +4,36 @@
 		"style": {
 			"navigationBarTitleText": "Nancy 电影"
 		}
+	}, {
+		"path": "pages/list/list",
+		"style": {
+			"navigationBarTitleText": "发现"
+		}
 	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#FFFFFF",
 		"backgroundColor": "#FFFFFF"
+	},
+	"tabBar": {
+		"color": "#707070",
+		"selectedColor": "#d81e06",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [{
+				"pagePath": "pages/index/index",
+				"iconPath": "static/images/tabbar/home.png",
+				"selectedIconPath": "static/images/tabbar/home_selected.png",
+				"text": "热映"
+			},
+			{
+				"pagePath": "pages/list/list",
+				"iconPath": "static/images/tabbar/index.png",
+				"selectedIconPath": "static/images/tabbar/index_selected.png",
+				"text": "发现"
+			}
+		]
 	},
 	"easycom": {
 		"autoscan": true,

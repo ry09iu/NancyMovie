@@ -7,6 +7,7 @@
 		 :class="(swiperType && displayMultipleItems ==1 && !vertical && !fullScreen)?'cardSwiper':'' " class="screen-swiper">
 			<swiper-item class="swiper-item" v-for="(item,index) in swiperList" :key="index" :class="(cardCur==index && displayMultipleItems ==1 && !vertical &&  !fullScreen)?'cur':''"
 			 @tap="clickItem(index)">
+				<!-- <view class="swiper-item-shade" v-if="!(cardCur==index && displayMultipleItems ==1 && !vertical && !fullScreen)"></view> -->
 				<view class="swiper-item-card" v-if="item[imageKey] && !item[videoKey]">
 					<image :src="item[imageKey]" :style="{'height':swiperHeight+'px'}"></image>
 					<text v-if="textTip" class="swiperText" :style="{
@@ -26,8 +27,8 @@
 					<cl-rate class="footer-rate" :value="item.rating/2" size="32" color="#F9b513" show-text disabled></cl-rate>
 					<view class="footer-info">
 						<text v-for="(i, index) in item.genres" :key="index">{{i+'/ '}}</text>
-						<text>{{' 片长'+item.durations[0]}}</text>
-						<text>{{' '+getPubdates(item.pubdates)}}</text>
+						<text>{{' 片长'+item.durations[0] + '/ '}}</text>
+						<text>{{getPubdates(item.pubdates)}}</text>
 					</view>
 				</view>
 			</swiper-item>
@@ -210,7 +211,7 @@
 
 <style lang="scss">
 	.cardSwiper .swiper-item {
-		width: 76% !important;
+		width: 86% !important;
 		overflow: initial;
 	}
 
@@ -219,17 +220,18 @@
 		display: block;
 		height: 100%;
 		border-radius: 38upx;
-		transform: scale(0.75, 0.86);
+		transform: scale(0.9, 0.8);
 		opacity: 1;
 		transition: all 0.2s ease-in 0s;
 		overflow: hidden;
 		box-sizing: border-box;
+		margin-left: 8.1%;
 	}
 
-	.cardSwiper .cur {
-		// margin-left: 34rpx;
-		margin-left: 40rpx;
-	}
+	//.cardSwiper .cur {
+	// margin-left: 34rpx;
+	//margin-left: 40rpx;
+	//}
 
 	.cardSwiper .cur view {
 		transform: initial;
@@ -270,39 +272,50 @@
 		width: 100%;
 	}
 
+	.swiper-item-shade {
+		width: 100% !important;
+		height: 97.5% !important;
+		opacity: 0.5 !important;
+		position: absolute !important;
+		background: rgba(255, 255, 255, 0.3);
+		z-index: 99;
+		transition: all 0.2s ease-in 0s;
+	}
+
 	.swiper-item-footer {
 		position: absolute !important;
 		left: 0;
-		bottom: 42px;
+		bottom: 84upx;
 		width: 100% !important;
 		height: auto !important;
 		background: #fff;
-		padding: 15px 16px;
+		padding: 30upx 32upx;
 		z-index: 9;
-		-webkit-box-shadow: 0 2px 16px 0 #e9ecef;
-		-moz-box-shadow: 0 2px 16px 0 #e9ecef;
-		box-shadow: 0 2px 16px 0 #e9ecef;
+		-webkit-box-shadow: 0 4upx 32upx 0 #e9ecef;
+		-moz-box-shadow: 0 4upx 32upx 0 #e9ecef;
+		box-shadow: 0 4upx 32upx 0 #e9ecef;
 	}
 
 	.cardSwiper .cur .swiper-item-footer {
-		bottom: 12px;
+		bottom: 24upx;
 	}
 
 	.footer-name {
-		font-size: 15px;
+		font-size: 30upx;
 		font-weight: bold;
 	}
 
 	.footer-info {
 		border-radius: 0 !important;
-		margin-top: 11px;
-		font-size: 12px;
-		color: #AAAAAA;
+		margin-top: 22upx;
+		line-height: 1.7;
+		font-size: 24upx;
+		color: #B2B2B2;
 	}
 
 	.footer-rate {
 		display: flex !important;
 		align-items: center !important;
-		height: 20px !important;
+		height: 40upx !important;
 	}
 </style>
