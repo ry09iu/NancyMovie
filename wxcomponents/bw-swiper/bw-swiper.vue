@@ -3,11 +3,11 @@
 		<swiper @change="change" @animationfinish="animationfinish" :indicator-dots="indicatorDots" :indicator-active-color="indicatorActiveColor"
 		 :indicator-color="indicatorColor" :autoplay="(autoplay && flag)" :current="current" :interval="interval" :duration="duration"
 		 :circular="circular" :vertical="vertical" :previous-margin="previousMargin" :next-margin="nextMargin"
-		 :display-multiple-items="displayMultipleItems" :skip-hidden-item-layout="skipHiddenItemLayout" :style="{'height':swiperHeight+'px'}"
+		 :display-multiple-items="displayMultipleItems" :skip-hidden-item-layout="skipHiddenItemLayout" :style="{'height':swiperHeight+88+'px'}"
 		 :class="(swiperType && displayMultipleItems ==1 && !vertical && !fullScreen)?'cardSwiper':'' " class="screen-swiper">
 			<swiper-item class="swiper-item" v-for="(item,index) in swiperList" :key="index" :class="(cardCur==index && displayMultipleItems ==1 && !vertical &&  !fullScreen)?'cur':''"
 			 @tap="clickItem(index)">
-				<view v-if="item[imageKey] && !item[videoKey]">
+				<view class="swiper-item-card" v-if="item[imageKey] && !item[videoKey]">
 					<image :src="item[imageKey]" :style="{'height':swiperHeight+'px'}"></image>
 					<text v-if="textTip" class="swiperText" :style="{
 						'bottom':(swiperType?(textStyleBottom+12):textStyleBottom)+'%',
@@ -17,12 +17,18 @@
 						'font-size':textStyleSize+'upx'
 					}">{{item[textKey]}}</text>
 				</view>
-				<view v-if="item[videoKey]">
+				<view class="swiper-item-card" v-if="item[videoKey]">
 					<video :src="item[videoKey]" @play="play" @pause="pause" :style="{'height':swiperHeight+'px'}" autoplay loop muted
 					 :autoplay="videoAutoplay" objectFit="cover"></video>
 				</view>
 				<view class="swiper-item-footer">
-
+					<text class="footer-name">{{item[textKey]}}</text>
+					<cl-rate class="footer-rate" :value="item.rating/2" size="32" color="#F9b513" show-text disabled></cl-rate>
+					<view class="footer-info">
+						<text v-for="(i, index) in item.genres" :key="index">{{i+'/ '}}</text>
+						<text>{{' 片长'+item.durations[0]}}</text>
+						<text>{{' '+getPubdates(item.pubdates)}}</text>
+					</view>
 				</view>
 			</swiper-item>
 		</swiper>
@@ -173,6 +179,12 @@
 
 		},
 		methods: {
+			getPubdates: function(pubdates) {
+				if (pubdates.length === 1) return pubdates;
+				let date = pubdates.filter(i => i.indexOf('中国大陆') > -1);
+				if (date && date.length > 0) return date[0].replace("(", "（").replace(")", "）");
+				return pubdates[0];
+			},
 			play: function() {
 				this.flag = false
 			},
@@ -196,32 +208,27 @@
 	}
 </script>
 
-<style>
+<style lang="scss">
 	.cardSwiper .swiper-item {
-		width: 84% !important;
-		/* margin-left: 42rpx; */
+		width: 76% !important;
 		overflow: initial;
 	}
-	
-/* 	.cardSwiper .swiper-item:first-child {
-		margin-left: 32rpx;
-	} */
 
-	.cardSwiper .swiper-item view {
+	.cardSwiper .swiper-item>view {
 		width: 100%;
 		display: block;
 		height: 100%;
 		border-radius: 38upx;
-		transform: scale(0.79, 0.86);
-		opacity: 0.7;
+		transform: scale(0.75, 0.86);
+		opacity: 1;
 		transition: all 0.2s ease-in 0s;
 		overflow: hidden;
 		box-sizing: border-box;
-		/* margin-left: 3%; */
 	}
-	
+
 	.cardSwiper .cur {
-		margin-left: 34rpx;
+		// margin-left: 34rpx;
+		margin-left: 40rpx;
 	}
 
 	.cardSwiper .cur view {
@@ -246,6 +253,10 @@
 
 	.screen-swiper image {
 		width: 100%;
+		border-radius: 38rpx;
+		-webkit-box-shadow: 0 2px 12px 0 #f0f0f0;
+		-moz-box-shadow: 0 2px 12px 0 #f0f0f0;
+		box-shadow: 0 2px 12px 0 #f0f0f0;
 	}
 
 	.screen-swiper video,
@@ -257,5 +268,41 @@
 
 	.swiperContent {
 		width: 100%;
+	}
+
+	.swiper-item-footer {
+		position: absolute !important;
+		left: 0;
+		bottom: 42px;
+		width: 100% !important;
+		height: auto !important;
+		background: #fff;
+		padding: 15px 16px;
+		z-index: 9;
+		-webkit-box-shadow: 0 2px 16px 0 #e9ecef;
+		-moz-box-shadow: 0 2px 16px 0 #e9ecef;
+		box-shadow: 0 2px 16px 0 #e9ecef;
+	}
+
+	.cardSwiper .cur .swiper-item-footer {
+		bottom: 12px;
+	}
+
+	.footer-name {
+		font-size: 15px;
+		font-weight: bold;
+	}
+
+	.footer-info {
+		border-radius: 0 !important;
+		margin-top: 11px;
+		font-size: 12px;
+		color: #AAAAAA;
+	}
+
+	.footer-rate {
+		display: flex !important;
+		align-items: center !important;
+		height: 20px !important;
 	}
 </style>

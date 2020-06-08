@@ -1,11 +1,15 @@
 <template>
 	<view class="container">
 		<view class="header">
-			<bw-swiper :swiperList="swiperList" style="width:100%" swiperType textTip w_h="0.675"></bw-swiper>
+			<cl-search v-model="val1" placeholder="搜索图片、文章、链接" @search="onSearch" :show-search-button="false">
+			</cl-search>
+			<bw-swiper :swiperList="swiperList" style="width:100%" swiperType w_h="0.675"></bw-swiper>
 		</view>
 
 		<view class="content">
-			<view class="hot-line"></view>
+			<view class="hot-line">
+				<!-- <cl-rate class="footer-rate" :value="5.6" size="32" color="#F9b513" show-text disabled></cl-rate> -->
+			</view>
 		</view>
 	</view>
 </template>
@@ -42,8 +46,13 @@
 					item.images.large = item.images.large.replace("s_ratio_poster", "l_ratio_poster");
 				}
 				swiperData.push({
+					id: item.id,
 					img: item.images.large,
-					text: item.title
+					text: item.title,
+					rating: item.rating.average,
+					genres: item.genres,
+					durations: item.durations,
+					pubdates: item.pubdates
 				})
 			})
 			console.log(swiperData);
@@ -81,5 +90,9 @@
 	.container {
 		font-size: 14px;
 		line-height: 24px;
+	}
+	
+	.cl-search {
+		padding: 7px 18px !important;
 	}
 </style>

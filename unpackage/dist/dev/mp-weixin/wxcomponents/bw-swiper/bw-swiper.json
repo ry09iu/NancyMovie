@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "cl-rate": "/cool/ui/components/rate/rate"
+  },
   "component": true
 }

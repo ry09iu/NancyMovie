@@ -8630,19 +8630,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   } };exports.default = _default;
 
 /***/ }),
-/* 30 */,
-/* 31 */,
-/* 32 */,
-/* 33 */,
-/* 34 */,
-/* 35 */,
-/* 36 */,
-/* 37 */,
-/* 38 */,
-/* 39 */,
-/* 40 */,
-/* 41 */,
-/* 42 */
+/* 30 */
 /*!******************************************************************************!*\
   !*** /Users/ry09iu/Documents/web-dev/uni-app/NancyMovie/data/in_theaters.js ***!
   \******************************************************************************/
@@ -9183,6 +9171,212 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 {
   inTheatersList: inTheatersList };exports.default = _default;
+
+/***/ }),
+/* 31 */,
+/* 32 */,
+/* 33 */,
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */,
+/* 38 */,
+/* 39 */,
+/* 40 */,
+/* 41 */,
+/* 42 */,
+/* 43 */,
+/* 44 */,
+/* 45 */
+/*!*********************************************************************************!*\
+  !*** /Users/ry09iu/Documents/web-dev/uni-app/NancyMovie/cool/ui/utils/index.js ***!
+  \*********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.isArray = isArray;exports.isObject = isObject;exports.isFunction = isFunction;exports.isString = isString;exports.isNull = isNull;exports.isBoolean = isBoolean;exports.isNumber = isNumber;exports.isPromise = isPromise;exports.isEmpty = isEmpty;exports.compareValue = compareValue;exports.cloneDeep = cloneDeep;exports.getParent = getParent;exports.diffForm = diffForm;exports.getCurrentColor = getCurrentColor;function isArray(value) {
+  if (typeof Array.isArray === 'function') {
+    return Array.isArray(value);
+  } else {
+    return Object.prototype.toString.call(value) === '[object Array]';
+  }
+}
+
+function isObject(value) {
+  return Object.prototype.toString.call(value) === '[object Object]';
+}
+
+function isFunction(value) {
+  return typeof value === 'function';
+}
+
+function isString(value) {
+  return typeof value === 'string';
+}
+
+function isNull(value) {
+  return !value && value !== 0;
+}
+
+function isBoolean(value) {
+  return typeof value === 'boolean';
+}
+
+function isNumber(value) {
+  return typeof value === 'number' && !isNaN(value);
+}
+
+function isPromise(obj) {
+  obj !== null && (
+  typeof obj === 'object' || typeof obj === 'function') &&
+  typeof obj.then === 'function';
+}
+
+function isEmpty(value) {
+  if (isArray(value)) {
+    return value.length === 0;
+  }
+
+  if (isObject(value)) {
+    return Object.keys(value).length === 0;
+  }
+
+  return value === '' || value === undefined || value === null;
+}
+
+function compareValue(a, b) {
+  return String(a) === String(b);
+}
+
+function cloneDeep(v) {
+  var d = v;
+
+  if (isObject(v)) {
+    for (var k in v) {
+      if (v.hasOwnProperty && v.hasOwnProperty(k)) {
+        if (v[k] && typeof v[k] === 'object') {
+          d[k] = cloneDeep(v[k]);
+        } else {
+          d[k] = v[k];
+        }
+      }
+    }
+  } else if (isArray(v)) {
+    d = v.map(cloneDeep);
+  }
+
+  return d;
+}
+
+/**
+   * 获取父级节点
+   * @param {*} name componentName
+   * @param {*} keys 保留的参数
+   */
+function getParent(name, keys) {
+  var parent = this.$parent;
+
+  while (parent) {
+    if (parent.$options.componentName !== name) {
+      parent = parent.$parent;
+    } else {
+      return keys.reduce(function (result, key) {
+        result[key] = parent[key];
+        return result;
+      }, {});
+    }
+  }
+
+  return null;
+}
+
+/**
+   * 检查数据变化的表单
+   *
+   * @param {*} d1 新数据
+   * @param {*} d2 旧数据
+   */
+function diffForm(d1, d2) {
+  var deep = function deep(d1, d2) {
+    if (isArray(d2)) {
+      if (isArray(d1)) {
+        if (d2.length === d1.length) {
+          return !d2.some(function (v, i) {
+            return !deep(d2[i], d1[i]);
+          });
+        }
+      }
+
+      return false;
+    }
+
+    if (isObject(d2)) {
+      if (isObject(d1)) {
+        var flag = true;
+
+        for (var i in d2) {
+          flag = deep(d2[i], d1[i]);
+
+          if (!flag) {
+            return false;
+          }
+        }
+
+        return true;
+      }
+
+      return false;
+    }
+
+    if (isString(d2)) {
+      return d1 === d2;
+    }
+
+    if (isNumber(d2)) {
+      return d1 === d2;
+    }
+
+    if (isBoolean(d2)) {
+      return d1 === d2;
+    }
+  };
+
+  return Object.keys(d2).filter(function (k) {
+    return !deep(d1[k], d2[k]);
+  });
+}
+
+/**
+   * 获取当前颜色
+   *
+   * @param {*} { color, max, value }
+   */
+function getCurrentColor(_ref) {var color = _ref.color,max = _ref.max,value = _ref.value;
+  if (isString(color)) {
+    return color;
+  } else {
+    var colorArray = color.
+    map(function (item, index) {
+      if (isString(item)) {
+        return {
+          color: item,
+          value: (index + 1) * (max / color.length) };
+
+      }
+      return item;
+    }).
+    sort(function (a, b) {return a.value - b.value;});
+
+    for (var i = 0; i < colorArray.length; i++) {
+      if (colorArray[i].value >= value) {
+        return colorArray[i].color;
+      }
+    }
+
+    return colorArray[colorArray.length - 1].color;
+  }
+}
 
 /***/ })
 ]]);

@@ -104,11 +104,11 @@
 /******/
 /******/
 /******/ 		// mini-css-extract-plugin CSS loading
-/******/ 		var cssChunks = {"wxcomponents/bw-swiper/bw-swiper":1};
+/******/ 		var cssChunks = {"wxcomponents/bw-swiper/bw-swiper":1,"cool/ui/components/rate/rate":1};
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "" + ({"wxcomponents/bw-swiper/bw-swiper":"wxcomponents/bw-swiper/bw-swiper"}[chunkId]||chunkId) + ".wxss";
+/******/ 				var href = "" + ({"cool/ui/components/search/search":"cool/ui/components/search/search","wxcomponents/bw-swiper/bw-swiper":"wxcomponents/bw-swiper/bw-swiper","cool/ui/components/button/button":"cool/ui/components/button/button","cool/ui/components/input/input":"cool/ui/components/input/input","cool/ui/components/rate/rate":"cool/ui/components/rate/rate","cool/ui/components/loading/loading":"cool/ui/components/loading/loading","cool/ui/components/icon/icon":"cool/ui/components/icon/icon"}[chunkId]||chunkId) + ".wxss";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {

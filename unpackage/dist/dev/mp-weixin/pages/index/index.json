@@ -1,6 +1,7 @@
 {
-  "navigationBarTitleText": "uni-ui基础项目",
+  "navigationBarTitleText": "Nancy 电影",
   "usingComponents": {
+    "cl-search": "/cool/ui/components/search/search",
     "bw-swiper": "/wxcomponents/bw-swiper/bw-swiper"
   }
 }
