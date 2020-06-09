@@ -108,7 +108,7 @@
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "" + ({"cool/ui/components/search/search":"cool/ui/components/search/search","wxcomponents/bw-swiper/bw-swiper":"wxcomponents/bw-swiper/bw-swiper","cool/ui/components/icon/icon":"cool/ui/components/icon/icon","cool/ui/components/progress/progress":"cool/ui/components/progress/progress","cool/ui/components/rate/rate":"cool/ui/components/rate/rate","cool/ui/components/button/button":"cool/ui/components/button/button","cool/ui/components/input/input":"cool/ui/components/input/input","cool/ui/components/loading/loading":"cool/ui/components/loading/loading"}[chunkId]||chunkId) + ".wxss";
+/******/ 				var href = "" + ({"cool/ui/components/search/search":"cool/ui/components/search/search","wxcomponents/bw-swiper/bw-swiper":"wxcomponents/bw-swiper/bw-swiper","cool/ui/components/icon/icon":"cool/ui/components/icon/icon","cool/ui/components/progress/progress":"cool/ui/components/progress/progress","cool/ui/components/rate/rate":"cool/ui/components/rate/rate","cool/ui/components/tabs/tabs":"cool/ui/components/tabs/tabs","cool/ui/components/button/button":"cool/ui/components/button/button","cool/ui/components/input/input":"cool/ui/components/input/input","cool/ui/components/loading/loading":"cool/ui/components/loading/loading"}[chunkId]||chunkId) + ".wxss";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {

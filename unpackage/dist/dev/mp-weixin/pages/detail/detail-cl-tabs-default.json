@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "detail-cl-tabs-default": "/pages/detail/detail-cl-tabs-default"
+  }
+}

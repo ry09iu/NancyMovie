@@ -1,0 +1,40 @@
+/* 修改 cool-uni 部分默认样式 */
+/* tabs */
+.cl-tabs__bar-li {
+	height: 58rpx;
+	width: 112rpx;
+	line-height: 58rpx;
+	margin: 0 8rpx;
+	font-size: 24rpx;
+	font-weight: bolder;
+	border: none;
+}
+
+.cl-tabs__bar-li.active {
+	position: relative;
+	color: #44bc56;
+	border: none;
+}
+
+.cl-tabs__bar {
+	padding: 28rpx 0;
+	border-bottom: none;
+	border-top-left-radius: 42rpx;
+	border-top-right-radius: 42rpx;
+}
+
+.active-background.active {
+	/* 	position: absolute;
+	bottom: 0;
+	left: 0; */
+	width: 112rpx;
+	height: 58rpx;
+	border-radius: 29rpx;
+	background: #eafbed;
+}
+
+// scroll-view
+// .tags .uni-scroll-view-content {
+// 	display: flex;
+// 	width: 150%;
+// }

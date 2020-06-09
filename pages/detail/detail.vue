@@ -50,7 +50,35 @@
 
 		</view>
 		<view class="content">
-			
+			<cl-tabs v-model="tabIndex" type="swiper" :labels="labels">
+				<template v-slot="{ index, item }">
+					<view v-if="item.value===0" class="intro">
+						<view class="summary">
+							<text>{{item.data.summary}}</text>
+						</view>
+						<view class="classify">相关分类</view>
+						<view class="tags"> 
+							<scroll-view class="tags-scroll" scroll-x="true" scroll-with-animation> 
+								<view class="tags-box" v-for="item in item.data.tags" :key="item">
+									{{item}}
+								</view> 
+							</scroll-view>
+						</view>
+					</view>
+					<view v-if="item.value===1" class="announce">
+						<text>{{subjectData.summary + '-' + item.label}}</text>
+					</view>
+					<view v-if="item.value===2" class="review">
+						<text>{{subjectData.summary + '-' + item.label}}</text>
+					</view>
+					<view v-if="item.value===3" class="comment">
+						<text>{{subjectData.summary + '-' + item.label}}</text>
+					</view>
+					<view v-if="item.value===4" class="other">
+						<text>{{JSON.stringify(subjectData) + '-' + item.label}}</text>
+					</view>
+				</template>
+			</cl-tabs>
 		</view>
 	</view>
 </template>
@@ -63,15 +91,39 @@
 		},
 		data() {
 			return {
+				summary: 'summary123',
 				subjectData: '',
 				subjectImg: '',
-				rateList: ''
+				rateList: '',
+				tabIndex: 0,
+				labels: [{
+						label: "简介",
+						value: 0
+					},
+					{
+						label: "预告",
+						value: 1
+					},
+					{
+						label: "影评",
+						value: 2
+					},
+					{
+						label: "讨论",
+						value: 3
+					},
+					{
+						label: "其他",
+						value: 4
+					}
+				]
 			}
 		},
 		async onLoad(options) {
 			console.log('subject_id', options.id);
 			this.subjectData = mockData.subject;
 			console.log('subjectData', this.subjectData);
+			this.labels[0].data = this.subjectData;
 			if (this.subjectData.images.large.indexOf("s_ratio_poster") > -1) {
 				this.subjectImg = this.subjectData.images.large.replace("s_ratio_poster", "l_ratio_poster").replace(".webp",
 					".jpg");
@@ -91,10 +143,11 @@
 			})
 			console.log('rateList', rateList);
 			this.rateList = rateList.reverse();
-		}
+		},
+		methods: {}
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	@import './detail.scss'
 </style>

@@ -20,6 +20,14 @@
 				]"
 				@tap="change(index)"
 			>
+				<view :class="[
+					'active-background',
+					{
+						active: value == item.name,
+					},
+				]">
+					<text class="cl-tabs__label">{{ item.label }}</text>
+				</view>
 				<text
 					:class="[
 						'cl-tabs__icon',
@@ -28,7 +36,7 @@
 					]"
 					v-if="item.prefixIcon"
 				></text>
-				<text class="cl-tabs__label">{{ item.label }}</text>
+				<!-- <text class="cl-tabs__label">{{ item.label }}</text> -->
 				<text
 					:class="[
 						'cl-tabs__icon',

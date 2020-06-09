@@ -9975,7 +9975,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /* 45 */,
 /* 46 */,
 /* 47 */,
-/* 48 */
+/* 48 */,
+/* 49 */,
+/* 50 */
 /*!**************************************************************************!*\
   !*** /Users/ry09iu/Documents/web-dev/uni-app/NancyMovie/data/subject.js ***!
   \**************************************************************************/
@@ -10620,8 +10622,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   subject: subject };exports.default = _default;
 
 /***/ }),
-/* 49 */,
-/* 50 */,
 /* 51 */,
 /* 52 */,
 /* 53 */,
@@ -10639,7 +10639,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /* 65 */,
 /* 66 */,
 /* 67 */,
-/* 68 */
+/* 68 */,
+/* 69 */,
+/* 70 */
 /*!*********************************************************************************!*\
   !*** /Users/ry09iu/Documents/web-dev/uni-app/NancyMovie/cool/ui/utils/index.js ***!
   \*********************************************************************************/
@@ -10829,6 +10831,65 @@ function getCurrentColor(_ref) {var color = _ref.color,max = _ref.max,value = _r
     return colorArray[colorArray.length - 1].color;
   }
 }
+
+/***/ }),
+/* 71 */,
+/* 72 */,
+/* 73 */,
+/* 74 */,
+/* 75 */,
+/* 76 */,
+/* 77 */,
+/* 78 */,
+/* 79 */,
+/* 80 */,
+/* 81 */,
+/* 82 */,
+/* 83 */,
+/* 84 */,
+/* 85 */,
+/* 86 */,
+/* 87 */,
+/* 88 */
+/*!************************************************************************************!*\
+  !*** /Users/ry09iu/Documents/web-dev/uni-app/NancyMovie/cool/ui/mixins/emitter.js ***!
+  \************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _broadcast(componentName, eventName, params) {
+  this.$children.forEach(function (child) {
+    var name = child.$options.componentName;
+
+    if (name === componentName) {
+      child.$emit.apply(child, [eventName].concat(params));
+    } else {
+      _broadcast.apply(child, [componentName, eventName].concat([params]));
+    }
+  });
+}var _default =
+
+{
+  methods: {
+    dispatch: function dispatch(componentName, eventName, params) {
+      var parent = this.$parent || this.$root;
+      var name = parent.$options.componentName;
+
+      while (parent && (!name || name !== componentName)) {
+        parent = parent.$parent;
+
+        if (parent) {
+          name = parent.$options.componentName;
+        }
+      }
+      if (parent) {
+        parent.$emit.apply(parent, [eventName].concat(params));
+      }
+    },
+    broadcast: function broadcast(componentName, eventName, params) {
+      _broadcast.call(this, componentName, eventName, params);
+    } } };exports.default = _default;
 
 /***/ })
 ]]);

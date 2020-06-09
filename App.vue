@@ -14,6 +14,7 @@
 
 <style lang="scss">
 	@import "./cool/ui/static/css/index.scss";
+	@import "./my-styles.scss";
 
 	/* 解决头条小程序组件内引入字体不生效的问题 */
 	/* #ifdef MP-TOUTIAO */
