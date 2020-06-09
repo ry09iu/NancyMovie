@@ -2520,18 +2520,48 @@ cl-button + cl-button {
           align-items: center;
 }
 .cl-rate__icon {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
   position: relative;
   margin-right: 10rpx;
 }
+.cl-rate__icon cl-icon {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
 .cl-rate__icon-active {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
   position: absolute;
   top: 0;
   left: 0;
   overflow: hidden;
 }
+.cl-rate__icon-active cl-icon {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
 .cl-rate__text {
   font-size: 26rpx;
   margin-left: 10rpx;
+  color: #44BB56;
+  font-weight: bolder;
 }
 .cl-select {
   position: relative;

@@ -33,20 +33,47 @@
           align-items: center;
 }
 .cl-rate__icon.data-v-9cff6e30 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
   position: relative;
   margin-right: 10rpx;
-  width: 20px !important;
+}
+.cl-rate__icon cl-icon.data-v-9cff6e30 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
 }
 .cl-rate__icon-active.data-v-9cff6e30 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
   position: absolute;
   top: 0;
   left: 0;
   overflow: hidden;
 }
+.cl-rate__icon-active cl-icon.data-v-9cff6e30 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
 .cl-rate__text.data-v-9cff6e30 {
   font-size: 26rpx;
   margin-left: 10rpx;
-  color: #4793EB;
+  color: #44BB56;
   font-weight: bolder;
 }
 

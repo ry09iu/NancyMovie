@@ -7772,6 +7772,794 @@ function normalizeComponent (
 /* 15 */,
 /* 16 */,
 /* 17 */
+/*!*********************************************************************************************!*\
+  !*** ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator/index.js ***!
+  \*********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! regenerator-runtime */ 18);
+
+/***/ }),
+/* 18 */
+/*!************************************************************!*\
+  !*** ./node_modules/regenerator-runtime/runtime-module.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Copyright (c) 2014-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// This method of obtaining a reference to the global object needs to be
+// kept identical to the way it is obtained in runtime.js
+var g = (function() {
+  return this || (typeof self === "object" && self);
+})() || Function("return this")();
+
+// Use `getOwnPropertyNames` because not all browsers support calling
+// `hasOwnProperty` on the global `self` object in a worker. See #183.
+var hadRuntime = g.regeneratorRuntime &&
+  Object.getOwnPropertyNames(g).indexOf("regeneratorRuntime") >= 0;
+
+// Save the old regeneratorRuntime in case it needs to be restored later.
+var oldRuntime = hadRuntime && g.regeneratorRuntime;
+
+// Force reevalutation of runtime.js.
+g.regeneratorRuntime = undefined;
+
+module.exports = __webpack_require__(/*! ./runtime */ 19);
+
+if (hadRuntime) {
+  // Restore the original runtime.
+  g.regeneratorRuntime = oldRuntime;
+} else {
+  // Remove the global property added by runtime.js.
+  try {
+    delete g.regeneratorRuntime;
+  } catch(e) {
+    g.regeneratorRuntime = undefined;
+  }
+}
+
+
+/***/ }),
+/* 19 */
+/*!*****************************************************!*\
+  !*** ./node_modules/regenerator-runtime/runtime.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * Copyright (c) 2014-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+!(function(global) {
+  "use strict";
+
+  var Op = Object.prototype;
+  var hasOwn = Op.hasOwnProperty;
+  var undefined; // More compressible than void 0.
+  var $Symbol = typeof Symbol === "function" ? Symbol : {};
+  var iteratorSymbol = $Symbol.iterator || "@@iterator";
+  var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
+  var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
+
+  var inModule = typeof module === "object";
+  var runtime = global.regeneratorRuntime;
+  if (runtime) {
+    if (inModule) {
+      // If regeneratorRuntime is defined globally and we're in a module,
+      // make the exports object identical to regeneratorRuntime.
+      module.exports = runtime;
+    }
+    // Don't bother evaluating the rest of this file if the runtime was
+    // already defined globally.
+    return;
+  }
+
+  // Define the runtime globally (as expected by generated code) as either
+  // module.exports (if we're in a module) or a new, empty object.
+  runtime = global.regeneratorRuntime = inModule ? module.exports : {};
+
+  function wrap(innerFn, outerFn, self, tryLocsList) {
+    // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
+    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator;
+    var generator = Object.create(protoGenerator.prototype);
+    var context = new Context(tryLocsList || []);
+
+    // The ._invoke method unifies the implementations of the .next,
+    // .throw, and .return methods.
+    generator._invoke = makeInvokeMethod(innerFn, self, context);
+
+    return generator;
+  }
+  runtime.wrap = wrap;
+
+  // Try/catch helper to minimize deoptimizations. Returns a completion
+  // record like context.tryEntries[i].completion. This interface could
+  // have been (and was previously) designed to take a closure to be
+  // invoked without arguments, but in all the cases we care about we
+  // already have an existing method we want to call, so there's no need
+  // to create a new function object. We can even get away with assuming
+  // the method takes exactly one argument, since that happens to be true
+  // in every case, so we don't have to touch the arguments object. The
+  // only additional allocation required is the completion record, which
+  // has a stable shape and so hopefully should be cheap to allocate.
+  function tryCatch(fn, obj, arg) {
+    try {
+      return { type: "normal", arg: fn.call(obj, arg) };
+    } catch (err) {
+      return { type: "throw", arg: err };
+    }
+  }
+
+  var GenStateSuspendedStart = "suspendedStart";
+  var GenStateSuspendedYield = "suspendedYield";
+  var GenStateExecuting = "executing";
+  var GenStateCompleted = "completed";
+
+  // Returning this object from the innerFn has the same effect as
+  // breaking out of the dispatch switch statement.
+  var ContinueSentinel = {};
+
+  // Dummy constructor functions that we use as the .constructor and
+  // .constructor.prototype properties for functions that return Generator
+  // objects. For full spec compliance, you may wish to configure your
+  // minifier not to mangle the names of these two functions.
+  function Generator() {}
+  function GeneratorFunction() {}
+  function GeneratorFunctionPrototype() {}
+
+  // This is a polyfill for %IteratorPrototype% for environments that
+  // don't natively support it.
+  var IteratorPrototype = {};
+  IteratorPrototype[iteratorSymbol] = function () {
+    return this;
+  };
+
+  var getProto = Object.getPrototypeOf;
+  var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
+  if (NativeIteratorPrototype &&
+      NativeIteratorPrototype !== Op &&
+      hasOwn.call(NativeIteratorPrototype, iteratorSymbol)) {
+    // This environment has a native %IteratorPrototype%; use it instead
+    // of the polyfill.
+    IteratorPrototype = NativeIteratorPrototype;
+  }
+
+  var Gp = GeneratorFunctionPrototype.prototype =
+    Generator.prototype = Object.create(IteratorPrototype);
+  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
+  GeneratorFunctionPrototype.constructor = GeneratorFunction;
+  GeneratorFunctionPrototype[toStringTagSymbol] =
+    GeneratorFunction.displayName = "GeneratorFunction";
+
+  // Helper for defining the .next, .throw, and .return methods of the
+  // Iterator interface in terms of a single ._invoke method.
+  function defineIteratorMethods(prototype) {
+    ["next", "throw", "return"].forEach(function(method) {
+      prototype[method] = function(arg) {
+        return this._invoke(method, arg);
+      };
+    });
+  }
+
+  runtime.isGeneratorFunction = function(genFun) {
+    var ctor = typeof genFun === "function" && genFun.constructor;
+    return ctor
+      ? ctor === GeneratorFunction ||
+        // For the native GeneratorFunction constructor, the best we can
+        // do is to check its .name property.
+        (ctor.displayName || ctor.name) === "GeneratorFunction"
+      : false;
+  };
+
+  runtime.mark = function(genFun) {
+    if (Object.setPrototypeOf) {
+      Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
+    } else {
+      genFun.__proto__ = GeneratorFunctionPrototype;
+      if (!(toStringTagSymbol in genFun)) {
+        genFun[toStringTagSymbol] = "GeneratorFunction";
+      }
+    }
+    genFun.prototype = Object.create(Gp);
+    return genFun;
+  };
+
+  // Within the body of any async function, `await x` is transformed to
+  // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
+  // `hasOwn.call(value, "__await")` to determine if the yielded value is
+  // meant to be awaited.
+  runtime.awrap = function(arg) {
+    return { __await: arg };
+  };
+
+  function AsyncIterator(generator) {
+    function invoke(method, arg, resolve, reject) {
+      var record = tryCatch(generator[method], generator, arg);
+      if (record.type === "throw") {
+        reject(record.arg);
+      } else {
+        var result = record.arg;
+        var value = result.value;
+        if (value &&
+            typeof value === "object" &&
+            hasOwn.call(value, "__await")) {
+          return Promise.resolve(value.__await).then(function(value) {
+            invoke("next", value, resolve, reject);
+          }, function(err) {
+            invoke("throw", err, resolve, reject);
+          });
+        }
+
+        return Promise.resolve(value).then(function(unwrapped) {
+          // When a yielded Promise is resolved, its final value becomes
+          // the .value of the Promise<{value,done}> result for the
+          // current iteration.
+          result.value = unwrapped;
+          resolve(result);
+        }, function(error) {
+          // If a rejected Promise was yielded, throw the rejection back
+          // into the async generator function so it can be handled there.
+          return invoke("throw", error, resolve, reject);
+        });
+      }
+    }
+
+    var previousPromise;
+
+    function enqueue(method, arg) {
+      function callInvokeWithMethodAndArg() {
+        return new Promise(function(resolve, reject) {
+          invoke(method, arg, resolve, reject);
+        });
+      }
+
+      return previousPromise =
+        // If enqueue has been called before, then we want to wait until
+        // all previous Promises have been resolved before calling invoke,
+        // so that results are always delivered in the correct order. If
+        // enqueue has not been called before, then it is important to
+        // call invoke immediately, without waiting on a callback to fire,
+        // so that the async generator function has the opportunity to do
+        // any necessary setup in a predictable way. This predictability
+        // is why the Promise constructor synchronously invokes its
+        // executor callback, and why async functions synchronously
+        // execute code before the first await. Since we implement simple
+        // async functions in terms of async generators, it is especially
+        // important to get this right, even though it requires care.
+        previousPromise ? previousPromise.then(
+          callInvokeWithMethodAndArg,
+          // Avoid propagating failures to Promises returned by later
+          // invocations of the iterator.
+          callInvokeWithMethodAndArg
+        ) : callInvokeWithMethodAndArg();
+    }
+
+    // Define the unified helper method that is used to implement .next,
+    // .throw, and .return (see defineIteratorMethods).
+    this._invoke = enqueue;
+  }
+
+  defineIteratorMethods(AsyncIterator.prototype);
+  AsyncIterator.prototype[asyncIteratorSymbol] = function () {
+    return this;
+  };
+  runtime.AsyncIterator = AsyncIterator;
+
+  // Note that simple async functions are implemented on top of
+  // AsyncIterator objects; they just return a Promise for the value of
+  // the final result produced by the iterator.
+  runtime.async = function(innerFn, outerFn, self, tryLocsList) {
+    var iter = new AsyncIterator(
+      wrap(innerFn, outerFn, self, tryLocsList)
+    );
+
+    return runtime.isGeneratorFunction(outerFn)
+      ? iter // If outerFn is a generator, return the full iterator.
+      : iter.next().then(function(result) {
+          return result.done ? result.value : iter.next();
+        });
+  };
+
+  function makeInvokeMethod(innerFn, self, context) {
+    var state = GenStateSuspendedStart;
+
+    return function invoke(method, arg) {
+      if (state === GenStateExecuting) {
+        throw new Error("Generator is already running");
+      }
+
+      if (state === GenStateCompleted) {
+        if (method === "throw") {
+          throw arg;
+        }
+
+        // Be forgiving, per 25.3.3.3.3 of the spec:
+        // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
+        return doneResult();
+      }
+
+      context.method = method;
+      context.arg = arg;
+
+      while (true) {
+        var delegate = context.delegate;
+        if (delegate) {
+          var delegateResult = maybeInvokeDelegate(delegate, context);
+          if (delegateResult) {
+            if (delegateResult === ContinueSentinel) continue;
+            return delegateResult;
+          }
+        }
+
+        if (context.method === "next") {
+          // Setting context._sent for legacy support of Babel's
+          // function.sent implementation.
+          context.sent = context._sent = context.arg;
+
+        } else if (context.method === "throw") {
+          if (state === GenStateSuspendedStart) {
+            state = GenStateCompleted;
+            throw context.arg;
+          }
+
+          context.dispatchException(context.arg);
+
+        } else if (context.method === "return") {
+          context.abrupt("return", context.arg);
+        }
+
+        state = GenStateExecuting;
+
+        var record = tryCatch(innerFn, self, context);
+        if (record.type === "normal") {
+          // If an exception is thrown from innerFn, we leave state ===
+          // GenStateExecuting and loop back for another invocation.
+          state = context.done
+            ? GenStateCompleted
+            : GenStateSuspendedYield;
+
+          if (record.arg === ContinueSentinel) {
+            continue;
+          }
+
+          return {
+            value: record.arg,
+            done: context.done
+          };
+
+        } else if (record.type === "throw") {
+          state = GenStateCompleted;
+          // Dispatch the exception by looping back around to the
+          // context.dispatchException(context.arg) call above.
+          context.method = "throw";
+          context.arg = record.arg;
+        }
+      }
+    };
+  }
+
+  // Call delegate.iterator[context.method](context.arg) and handle the
+  // result, either by returning a { value, done } result from the
+  // delegate iterator, or by modifying context.method and context.arg,
+  // setting context.delegate to null, and returning the ContinueSentinel.
+  function maybeInvokeDelegate(delegate, context) {
+    var method = delegate.iterator[context.method];
+    if (method === undefined) {
+      // A .throw or .return when the delegate iterator has no .throw
+      // method always terminates the yield* loop.
+      context.delegate = null;
+
+      if (context.method === "throw") {
+        if (delegate.iterator.return) {
+          // If the delegate iterator has a return method, give it a
+          // chance to clean up.
+          context.method = "return";
+          context.arg = undefined;
+          maybeInvokeDelegate(delegate, context);
+
+          if (context.method === "throw") {
+            // If maybeInvokeDelegate(context) changed context.method from
+            // "return" to "throw", let that override the TypeError below.
+            return ContinueSentinel;
+          }
+        }
+
+        context.method = "throw";
+        context.arg = new TypeError(
+          "The iterator does not provide a 'throw' method");
+      }
+
+      return ContinueSentinel;
+    }
+
+    var record = tryCatch(method, delegate.iterator, context.arg);
+
+    if (record.type === "throw") {
+      context.method = "throw";
+      context.arg = record.arg;
+      context.delegate = null;
+      return ContinueSentinel;
+    }
+
+    var info = record.arg;
+
+    if (! info) {
+      context.method = "throw";
+      context.arg = new TypeError("iterator result is not an object");
+      context.delegate = null;
+      return ContinueSentinel;
+    }
+
+    if (info.done) {
+      // Assign the result of the finished delegate to the temporary
+      // variable specified by delegate.resultName (see delegateYield).
+      context[delegate.resultName] = info.value;
+
+      // Resume execution at the desired location (see delegateYield).
+      context.next = delegate.nextLoc;
+
+      // If context.method was "throw" but the delegate handled the
+      // exception, let the outer generator proceed normally. If
+      // context.method was "next", forget context.arg since it has been
+      // "consumed" by the delegate iterator. If context.method was
+      // "return", allow the original .return call to continue in the
+      // outer generator.
+      if (context.method !== "return") {
+        context.method = "next";
+        context.arg = undefined;
+      }
+
+    } else {
+      // Re-yield the result returned by the delegate method.
+      return info;
+    }
+
+    // The delegate iterator is finished, so forget it and continue with
+    // the outer generator.
+    context.delegate = null;
+    return ContinueSentinel;
+  }
+
+  // Define Generator.prototype.{next,throw,return} in terms of the
+  // unified ._invoke helper method.
+  defineIteratorMethods(Gp);
+
+  Gp[toStringTagSymbol] = "Generator";
+
+  // A Generator should always return itself as the iterator object when the
+  // @@iterator function is called on it. Some browsers' implementations of the
+  // iterator prototype chain incorrectly implement this, causing the Generator
+  // object to not be returned from this call. This ensures that doesn't happen.
+  // See https://github.com/facebook/regenerator/issues/274 for more details.
+  Gp[iteratorSymbol] = function() {
+    return this;
+  };
+
+  Gp.toString = function() {
+    return "[object Generator]";
+  };
+
+  function pushTryEntry(locs) {
+    var entry = { tryLoc: locs[0] };
+
+    if (1 in locs) {
+      entry.catchLoc = locs[1];
+    }
+
+    if (2 in locs) {
+      entry.finallyLoc = locs[2];
+      entry.afterLoc = locs[3];
+    }
+
+    this.tryEntries.push(entry);
+  }
+
+  function resetTryEntry(entry) {
+    var record = entry.completion || {};
+    record.type = "normal";
+    delete record.arg;
+    entry.completion = record;
+  }
+
+  function Context(tryLocsList) {
+    // The root entry object (effectively a try statement without a catch
+    // or a finally block) gives us a place to store values thrown from
+    // locations where there is no enclosing try statement.
+    this.tryEntries = [{ tryLoc: "root" }];
+    tryLocsList.forEach(pushTryEntry, this);
+    this.reset(true);
+  }
+
+  runtime.keys = function(object) {
+    var keys = [];
+    for (var key in object) {
+      keys.push(key);
+    }
+    keys.reverse();
+
+    // Rather than returning an object with a next method, we keep
+    // things simple and return the next function itself.
+    return function next() {
+      while (keys.length) {
+        var key = keys.pop();
+        if (key in object) {
+          next.value = key;
+          next.done = false;
+          return next;
+        }
+      }
+
+      // To avoid creating an additional object, we just hang the .value
+      // and .done properties off the next function object itself. This
+      // also ensures that the minifier will not anonymize the function.
+      next.done = true;
+      return next;
+    };
+  };
+
+  function values(iterable) {
+    if (iterable) {
+      var iteratorMethod = iterable[iteratorSymbol];
+      if (iteratorMethod) {
+        return iteratorMethod.call(iterable);
+      }
+
+      if (typeof iterable.next === "function") {
+        return iterable;
+      }
+
+      if (!isNaN(iterable.length)) {
+        var i = -1, next = function next() {
+          while (++i < iterable.length) {
+            if (hasOwn.call(iterable, i)) {
+              next.value = iterable[i];
+              next.done = false;
+              return next;
+            }
+          }
+
+          next.value = undefined;
+          next.done = true;
+
+          return next;
+        };
+
+        return next.next = next;
+      }
+    }
+
+    // Return an iterator with no values.
+    return { next: doneResult };
+  }
+  runtime.values = values;
+
+  function doneResult() {
+    return { value: undefined, done: true };
+  }
+
+  Context.prototype = {
+    constructor: Context,
+
+    reset: function(skipTempReset) {
+      this.prev = 0;
+      this.next = 0;
+      // Resetting context._sent for legacy support of Babel's
+      // function.sent implementation.
+      this.sent = this._sent = undefined;
+      this.done = false;
+      this.delegate = null;
+
+      this.method = "next";
+      this.arg = undefined;
+
+      this.tryEntries.forEach(resetTryEntry);
+
+      if (!skipTempReset) {
+        for (var name in this) {
+          // Not sure about the optimal order of these conditions:
+          if (name.charAt(0) === "t" &&
+              hasOwn.call(this, name) &&
+              !isNaN(+name.slice(1))) {
+            this[name] = undefined;
+          }
+        }
+      }
+    },
+
+    stop: function() {
+      this.done = true;
+
+      var rootEntry = this.tryEntries[0];
+      var rootRecord = rootEntry.completion;
+      if (rootRecord.type === "throw") {
+        throw rootRecord.arg;
+      }
+
+      return this.rval;
+    },
+
+    dispatchException: function(exception) {
+      if (this.done) {
+        throw exception;
+      }
+
+      var context = this;
+      function handle(loc, caught) {
+        record.type = "throw";
+        record.arg = exception;
+        context.next = loc;
+
+        if (caught) {
+          // If the dispatched exception was caught by a catch block,
+          // then let that catch block handle the exception normally.
+          context.method = "next";
+          context.arg = undefined;
+        }
+
+        return !! caught;
+      }
+
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        var record = entry.completion;
+
+        if (entry.tryLoc === "root") {
+          // Exception thrown outside of any try block that could handle
+          // it, so set the completion value of the entire function to
+          // throw the exception.
+          return handle("end");
+        }
+
+        if (entry.tryLoc <= this.prev) {
+          var hasCatch = hasOwn.call(entry, "catchLoc");
+          var hasFinally = hasOwn.call(entry, "finallyLoc");
+
+          if (hasCatch && hasFinally) {
+            if (this.prev < entry.catchLoc) {
+              return handle(entry.catchLoc, true);
+            } else if (this.prev < entry.finallyLoc) {
+              return handle(entry.finallyLoc);
+            }
+
+          } else if (hasCatch) {
+            if (this.prev < entry.catchLoc) {
+              return handle(entry.catchLoc, true);
+            }
+
+          } else if (hasFinally) {
+            if (this.prev < entry.finallyLoc) {
+              return handle(entry.finallyLoc);
+            }
+
+          } else {
+            throw new Error("try statement without catch or finally");
+          }
+        }
+      }
+    },
+
+    abrupt: function(type, arg) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc <= this.prev &&
+            hasOwn.call(entry, "finallyLoc") &&
+            this.prev < entry.finallyLoc) {
+          var finallyEntry = entry;
+          break;
+        }
+      }
+
+      if (finallyEntry &&
+          (type === "break" ||
+           type === "continue") &&
+          finallyEntry.tryLoc <= arg &&
+          arg <= finallyEntry.finallyLoc) {
+        // Ignore the finally entry if control is not jumping to a
+        // location outside the try/catch block.
+        finallyEntry = null;
+      }
+
+      var record = finallyEntry ? finallyEntry.completion : {};
+      record.type = type;
+      record.arg = arg;
+
+      if (finallyEntry) {
+        this.method = "next";
+        this.next = finallyEntry.finallyLoc;
+        return ContinueSentinel;
+      }
+
+      return this.complete(record);
+    },
+
+    complete: function(record, afterLoc) {
+      if (record.type === "throw") {
+        throw record.arg;
+      }
+
+      if (record.type === "break" ||
+          record.type === "continue") {
+        this.next = record.arg;
+      } else if (record.type === "return") {
+        this.rval = this.arg = record.arg;
+        this.method = "return";
+        this.next = "end";
+      } else if (record.type === "normal" && afterLoc) {
+        this.next = afterLoc;
+      }
+
+      return ContinueSentinel;
+    },
+
+    finish: function(finallyLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.finallyLoc === finallyLoc) {
+          this.complete(entry.completion, entry.afterLoc);
+          resetTryEntry(entry);
+          return ContinueSentinel;
+        }
+      }
+    },
+
+    "catch": function(tryLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc === tryLoc) {
+          var record = entry.completion;
+          if (record.type === "throw") {
+            var thrown = record.arg;
+            resetTryEntry(entry);
+          }
+          return thrown;
+        }
+      }
+
+      // The context.catch method must only be called with a location
+      // argument that corresponds to a known catch block.
+      throw new Error("illegal catch attempt");
+    },
+
+    delegateYield: function(iterable, resultName, nextLoc) {
+      this.delegate = {
+        iterator: values(iterable),
+        resultName: resultName,
+        nextLoc: nextLoc
+      };
+
+      if (this.method === "next") {
+        // Deliberately forget the last sent value so that we don't
+        // accidentally pass it on to the delegate.
+        this.arg = undefined;
+      }
+
+      return ContinueSentinel;
+    }
+  };
+})(
+  // In sloppy mode, unbound `this` refers to the global object, fallback to
+  // Function constructor if we're in global strict mode. That is sadly a form
+  // of indirect eval which violates Content Security Policy.
+  (function() {
+    return this || (typeof self === "object" && self);
+  })() || Function("return this")()
+);
+
+
+/***/ }),
+/* 20 */
 /*!**************************************************************************************!*\
   !*** /Users/ry09iu/Documents/web-dev/uni-app/NancyMovie/utils/luch-request/index.js ***!
   \**************************************************************************************/
@@ -7779,11 +8567,11 @@ function normalizeComponent (
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _Request = _interopRequireDefault(__webpack_require__(/*! ./core/Request */ 18));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _Request = _interopRequireDefault(__webpack_require__(/*! ./core/Request */ 21));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 _Request.default;exports.default = _default;
 
 /***/ }),
-/* 18 */
+/* 21 */
 /*!*********************************************************************************************!*\
   !*** /Users/ry09iu/Documents/web-dev/uni-app/NancyMovie/utils/luch-request/core/Request.js ***!
   \*********************************************************************************************/
@@ -7805,11 +8593,11 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
-var _dispatchRequest = _interopRequireDefault(__webpack_require__(/*! ./dispatchRequest */ 19));
-var _InterceptorManager = _interopRequireDefault(__webpack_require__(/*! ./InterceptorManager */ 27));
-var _mergeConfig = _interopRequireDefault(__webpack_require__(/*! ./mergeConfig */ 28));
-var _defaults = _interopRequireDefault(__webpack_require__(/*! ./defaults */ 29));
-var _utils = __webpack_require__(/*! ../utils */ 22);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}var
+var _dispatchRequest = _interopRequireDefault(__webpack_require__(/*! ./dispatchRequest */ 22));
+var _InterceptorManager = _interopRequireDefault(__webpack_require__(/*! ./InterceptorManager */ 30));
+var _mergeConfig = _interopRequireDefault(__webpack_require__(/*! ./mergeConfig */ 31));
+var _defaults = _interopRequireDefault(__webpack_require__(/*! ./defaults */ 32));
+var _utils = __webpack_require__(/*! ../utils */ 25);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}var
 
 Request = /*#__PURE__*/function () {
   /**
@@ -7991,7 +8779,7 @@ Request = /*#__PURE__*/function () {
                                */exports.default = Request;
 
 /***/ }),
-/* 19 */
+/* 22 */
 /*!*****************************************************************************************************!*\
   !*** /Users/ry09iu/Documents/web-dev/uni-app/NancyMovie/utils/luch-request/core/dispatchRequest.js ***!
   \*****************************************************************************************************/
@@ -7999,7 +8787,7 @@ Request = /*#__PURE__*/function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _index = _interopRequireDefault(__webpack_require__(/*! ../adapters/index */ 20));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _index = _interopRequireDefault(__webpack_require__(/*! ../adapters/index */ 23));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 
 
 function _default(config) {
@@ -8008,7 +8796,7 @@ function _default(config) {
 };exports.default = _default;
 
 /***/ }),
-/* 20 */
+/* 23 */
 /*!***********************************************************************************************!*\
   !*** /Users/ry09iu/Documents/web-dev/uni-app/NancyMovie/utils/luch-request/adapters/index.js ***!
   \***********************************************************************************************/
@@ -8016,9 +8804,9 @@ function _default(config) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _buildURL = _interopRequireDefault(__webpack_require__(/*! ../helpers/buildURL */ 21));
-var _buildFullPath = _interopRequireDefault(__webpack_require__(/*! ../core/buildFullPath */ 23));
-var _settle = _interopRequireDefault(__webpack_require__(/*! ../core/settle */ 26));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _buildURL = _interopRequireDefault(__webpack_require__(/*! ../helpers/buildURL */ 24));
+var _buildFullPath = _interopRequireDefault(__webpack_require__(/*! ../core/buildFullPath */ 26));
+var _settle = _interopRequireDefault(__webpack_require__(/*! ../core/settle */ 29));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
 
 /**
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           * 返回可选值存在的配置
@@ -8102,7 +8890,7 @@ function _default(config) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 21 */
+/* 24 */
 /*!*************************************************************************************************!*\
   !*** /Users/ry09iu/Documents/web-dev/uni-app/NancyMovie/utils/luch-request/helpers/buildURL.js ***!
   \*************************************************************************************************/
@@ -8112,7 +8900,7 @@ function _default(config) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = buildURL;
 
-var utils = _interopRequireWildcard(__webpack_require__(/*! ./../utils */ 22));function _getRequireWildcardCache() {if (typeof WeakMap !== "function") return null;var cache = new WeakMap();_getRequireWildcardCache = function _getRequireWildcardCache() {return cache;};return cache;}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;}if (obj === null || typeof obj !== "object" && typeof obj !== "function") {return { default: obj };}var cache = _getRequireWildcardCache();if (cache && cache.has(obj)) {return cache.get(obj);}var newObj = {};var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;if (desc && (desc.get || desc.set)) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}newObj.default = obj;if (cache) {cache.set(obj, newObj);}return newObj;}
+var utils = _interopRequireWildcard(__webpack_require__(/*! ./../utils */ 25));function _getRequireWildcardCache() {if (typeof WeakMap !== "function") return null;var cache = new WeakMap();_getRequireWildcardCache = function _getRequireWildcardCache() {return cache;};return cache;}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;}if (obj === null || typeof obj !== "object" && typeof obj !== "function") {return { default: obj };}var cache = _getRequireWildcardCache();if (cache && cache.has(obj)) {return cache.get(obj);}var newObj = {};var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;if (desc && (desc.get || desc.set)) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}newObj.default = obj;if (cache) {cache.set(obj, newObj);}return newObj;}
 
 function encode(val) {
   return encodeURIComponent(val).
@@ -8181,7 +8969,7 @@ function buildURL(url, params) {
 }
 
 /***/ }),
-/* 22 */
+/* 25 */
 /*!**************************************************************************************!*\
   !*** /Users/ry09iu/Documents/web-dev/uni-app/NancyMovie/utils/luch-request/utils.js ***!
   \**************************************************************************************/
@@ -8322,7 +9110,7 @@ function deepMerge() /* obj1, obj2, obj3, ... */{
 }
 
 /***/ }),
-/* 23 */
+/* 26 */
 /*!***************************************************************************************************!*\
   !*** /Users/ry09iu/Documents/web-dev/uni-app/NancyMovie/utils/luch-request/core/buildFullPath.js ***!
   \***************************************************************************************************/
@@ -8332,8 +9120,8 @@ function deepMerge() /* obj1, obj2, obj3, ... */{
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = buildFullPath;
 
-var _isAbsoluteURL = _interopRequireDefault(__webpack_require__(/*! ../helpers/isAbsoluteURL */ 24));
-var _combineURLs = _interopRequireDefault(__webpack_require__(/*! ../helpers/combineURLs */ 25));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _isAbsoluteURL = _interopRequireDefault(__webpack_require__(/*! ../helpers/isAbsoluteURL */ 27));
+var _combineURLs = _interopRequireDefault(__webpack_require__(/*! ../helpers/combineURLs */ 28));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 /**
                                                                                                                                                                             * Creates a new URL by combining the baseURL with the requestedURL,
@@ -8352,7 +9140,7 @@ function buildFullPath(baseURL, requestedURL) {
 }
 
 /***/ }),
-/* 24 */
+/* 27 */
 /*!******************************************************************************************************!*\
   !*** /Users/ry09iu/Documents/web-dev/uni-app/NancyMovie/utils/luch-request/helpers/isAbsoluteURL.js ***!
   \******************************************************************************************************/
@@ -8376,7 +9164,7 @@ function isAbsoluteURL(url) {
 }
 
 /***/ }),
-/* 25 */
+/* 28 */
 /*!****************************************************************************************************!*\
   !*** /Users/ry09iu/Documents/web-dev/uni-app/NancyMovie/utils/luch-request/helpers/combineURLs.js ***!
   \****************************************************************************************************/
@@ -8400,7 +9188,7 @@ function combineURLs(baseURL, relativeURL) {
 }
 
 /***/ }),
-/* 26 */
+/* 29 */
 /*!********************************************************************************************!*\
   !*** /Users/ry09iu/Documents/web-dev/uni-app/NancyMovie/utils/luch-request/core/settle.js ***!
   \********************************************************************************************/
@@ -8426,7 +9214,7 @@ function settle(resolve, reject, response) {
 }
 
 /***/ }),
-/* 27 */
+/* 30 */
 /*!********************************************************************************************************!*\
   !*** /Users/ry09iu/Documents/web-dev/uni-app/NancyMovie/utils/luch-request/core/InterceptorManager.js ***!
   \********************************************************************************************************/
@@ -8487,7 +9275,7 @@ InterceptorManager.prototype.forEach = function forEach(fn) {
 InterceptorManager;exports.default = _default;
 
 /***/ }),
-/* 28 */
+/* 31 */
 /*!*************************************************************************************************!*\
   !*** /Users/ry09iu/Documents/web-dev/uni-app/NancyMovie/utils/luch-request/core/mergeConfig.js ***!
   \*************************************************************************************************/
@@ -8495,7 +9283,7 @@ InterceptorManager;exports.default = _default;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _utils = __webpack_require__(/*! ../utils */ 22);function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _utils = __webpack_require__(/*! ../utils */ 25);function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
 
 /**
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   * 合并局部配置优先的配置，如果局部有该配置项则用局部，如果全局有该配置项则用全局
@@ -8594,7 +9382,7 @@ function _default(globalsConfig) {var config2 = arguments.length > 1 && argument
 };exports.default = _default;
 
 /***/ }),
-/* 29 */
+/* 32 */
 /*!**********************************************************************************************!*\
   !*** /Users/ry09iu/Documents/web-dev/uni-app/NancyMovie/utils/luch-request/core/defaults.js ***!
   \**********************************************************************************************/
@@ -8630,7 +9418,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   } };exports.default = _default;
 
 /***/ }),
-/* 30 */
+/* 33 */
 /*!******************************************************************************!*\
   !*** /Users/ry09iu/Documents/web-dev/uni-app/NancyMovie/data/in_theaters.js ***!
   \******************************************************************************/
@@ -9173,9 +9961,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   inTheatersList: inTheatersList };exports.default = _default;
 
 /***/ }),
-/* 31 */,
-/* 32 */,
-/* 33 */,
 /* 34 */,
 /* 35 */,
 /* 36 */,
@@ -9190,7 +9975,651 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /* 45 */,
 /* 46 */,
 /* 47 */,
-/* 48 */,
+/* 48 */
+/*!**************************************************************************!*\
+  !*** /Users/ry09iu/Documents/web-dev/uni-app/NancyMovie/data/subject.js ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var subject = {
+  "rating": {
+    "max": 10,
+    "average": 7.5,
+    "details": {
+      "1": 31,
+      "2": 269,
+      "3": 3456,
+      "4": 4815,
+      "5": 1396 },
+
+    "stars": "40",
+    "min": 0 },
+
+  "reviews_count": 103,
+  "videos": [],
+  "wish_count": 22615,
+  "original_title": "Spies in Disguise",
+  "blooper_urls": [
+  "https://vt1.doubanio.com/202006082020/7c94752d3cc713b2550de9005003722f/view/movie/M/302570364.mp4",
+  "https://vt1.doubanio.com/202006082020/769f7998a2c1d050b64c76922779baed/view/movie/M/302570365.mp4",
+  "https://vt1.doubanio.com/202006082020/4bb074dc179569fb0dc58b23a8496ed1/view/movie/M/302570366.mp4",
+  "https://vt1.doubanio.com/202006082020/af1cc9c61b084bb16ccadc7d176ca25b/view/movie/M/302570367.mp4"],
+
+  "collect_count": 54847,
+  "images": {
+    "small": "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2577340942.webp",
+    "large": "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2577340942.webp",
+    "medium": "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2577340942.webp" },
+
+  "douban_site": "",
+  "year": "2019",
+  "popular_comments": [{
+    "rating": {
+      "max": 5,
+      "value": 4,
+      "min": 0 },
+
+    "useful_count": 147,
+    "author": {
+      "uid": "huahuos",
+      "avatar": "https://img9.doubanio.com/icon/u1861783-12.jpg",
+      "signature": "この星の無數の塵のひとつだと",
+      "alt": "https://www.douban.com/people/huahuos/",
+      "id": "1861783",
+      "name": "小光酱" },
+
+    "subject_id": "27000084",
+    "content": "笑点密集要素丰富老梗新玩，非常适合假期放松观看(顺便吃中餐外卖看韩剧这个梗真是笑中带泪…",
+    "created_at": "2019-12-26 05:31:12",
+    "id": "2092402530" },
+
+  {
+    "rating": {
+      "max": 5,
+      "value": 4,
+      "min": 0 },
+
+    "useful_count": 209,
+    "author": {
+      "uid": "mr_tree",
+      "avatar": "https://img9.doubanio.com/icon/u60689518-41.jpg",
+      "signature": "",
+      "alt": "https://www.douban.com/people/mr_tree/",
+      "id": "60689518",
+      "name": "凹凸" },
+
+    "subject_id": "27000084",
+    "content": "史皇一年演了两部双子杀手 荷兰弟一年演了两部老少恋同志片",
+    "created_at": "2020-01-05 20:29:25",
+    "id": "2121847577" },
+
+  {
+    "rating": {
+      "max": 5,
+      "value": 3,
+      "min": 0 },
+
+    "useful_count": 395,
+    "author": {
+      "uid": "45419889",
+      "avatar": "https://img9.doubanio.com/icon/u45419889-7.jpg",
+      "signature": "",
+      "alt": "https://www.douban.com/people/45419889/",
+      "id": "45419889",
+      "name": "Maxine" },
+
+    "subject_id": "27000084",
+    "content": "荷兰弟大战无人机，这个梗是过不去了",
+    "created_at": "2020-01-03 22:16:13",
+    "id": "2118229517" },
+
+  {
+    "rating": {
+      "max": 5,
+      "value": 5,
+      "min": 0 },
+
+    "useful_count": 201,
+    "author": {
+      "uid": "QKeenACl.",
+      "avatar": "https://img9.doubanio.com/icon/u36333607-7.jpg",
+      "signature": "念念不忘，必有回响",
+      "alt": "https://www.douban.com/people/QKeenACl./",
+      "id": "36333607",
+      "name": "非编码Postdoc" },
+
+    "subject_id": "27000084",
+    "content": "终于看到了贺岁片了！笑点太密集了！笑哭了！细节太棒了！仿佛就是真人版will！荷兰弟的人设也太可爱了，一个用韩剧下中餐外卖的nerd",
+    "created_at": "2019-12-27 09:26:44",
+    "id": "1835711912" }],
+
+
+  "alt": "https://movie.douban.com/subject/27000084/",
+  "id": "27000084",
+  "mobile_url": "https://movie.douban.com/subject/27000084/mobile",
+  "photos_count": 251,
+  "pubdate": "2020-01-03",
+  "title": "变身特工",
+  "do_count": null,
+  "has_video": false,
+  "share_url": "https://m.douban.com/movie/subject/27000084",
+  "seasons_count": null,
+  "languages": [
+  "英语",
+  "日语"],
+
+  "schedule_url": "https://movie.douban.com/subject/27000084/cinema/",
+  "writers": [{
+    "avatars": {
+      "small": "https://img9.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1513575640.81.webp",
+      "large": "https://img9.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1513575640.81.webp",
+      "medium": "https://img9.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1513575640.81.webp" },
+
+    "name_en": "Brad Copeland",
+    "name": "布拉德·科普兰",
+    "alt": "https://movie.douban.com/celebrity/1313140/",
+    "id": "1313140" },
+
+  {
+    "avatars": {
+      "small": "https://img9.doubanio.com/f/movie/ca527386eb8c4e325611e22dfcb04cc116d6b423/pics/movie/celebrity-default-small.png",
+      "large": "https://img9.doubanio.com/f/movie/63acc16ca6309ef191f0378faf793d1096a3e606/pics/movie/celebrity-default-large.png",
+      "medium": "https://img9.doubanio.com/f/movie/8dd0c794499fe925ae2ae89ee30cd225750457b4/pics/movie/celebrity-default-medium.png" },
+
+    "name_en": "Lloyd Taylor",
+    "name": "劳埃德·泰勒",
+    "alt": "https://movie.douban.com/celebrity/1428871/",
+    "id": "1428871" }],
+
+
+  "pubdates": [
+  "2019-12-04(加州首映)",
+  "2019-12-25(美国)",
+  "2020-01-03(中国大陆)"],
+
+  "website": "",
+  "tags": [
+  "动画",
+  "喜剧",
+  "搞笑",
+  "美国",
+  "科幻",
+  "二十世纪福克斯",
+  "动作",
+  "蓝天工作室",
+  "2019",
+  "2020"],
+
+  "has_schedule": true,
+  "durations": [
+  "102分钟"],
+
+  "genres": [
+  "喜剧",
+  "动作",
+  "科幻"],
+
+  "collection": null,
+  "trailers": [{
+    "medium": "https://img9.doubanio.com/img/trailer/medium/2580395166.jpg?",
+    "title": "香港预告片 (中文字幕)",
+    "subject_id": "27000084",
+    "alt": "https://movie.douban.com/trailer/257639/",
+    "small": "https://img9.doubanio.com/img/trailer/small/2580395166.jpg?",
+    "resource_url": "https://vt1.doubanio.com/202006082020/1a504dcd7a2f68d98968f9d76105b43c/view/movie/M/302570639.mp4",
+    "id": "257639" },
+
+  {
+    "medium": "https://img9.doubanio.com/img/trailer/medium/2578783205.jpg?",
+    "title": "台湾预告片 (中文字幕)",
+    "subject_id": "27000084",
+    "alt": "https://movie.douban.com/trailer/257301/",
+    "small": "https://img9.doubanio.com/img/trailer/small/2578783205.jpg?",
+    "resource_url": "https://vt1.doubanio.com/202006082020/7d574204affd637847af763f462769fb/view/movie/M/302570301.mp4",
+    "id": "257301" },
+
+  {
+    "medium": "https://img9.doubanio.com/img/trailer/medium/2577345142.jpg?",
+    "title": "中国预告片：定档版 (中文字幕)",
+    "subject_id": "27000084",
+    "alt": "https://movie.douban.com/trailer/256902/",
+    "small": "https://img9.doubanio.com/img/trailer/small/2577345142.jpg?",
+    "resource_url": "https://vt1.doubanio.com/202006082020/ef2d5e7b0712b45d29f4411e3715e99c/view/movie/M/302560902.mp4",
+    "id": "256902" },
+
+  {
+    "medium": "https://img9.doubanio.com/img/trailer/medium/2574579802.jpg?",
+    "title": "中国预告片 (中文字幕)",
+    "subject_id": "27000084",
+    "alt": "https://movie.douban.com/trailer/255700/",
+    "small": "https://img9.doubanio.com/img/trailer/small/2574579802.jpg?",
+    "resource_url": "https://vt1.doubanio.com/202006082020/99f091d298faf984211125e2333bc2f0/view/movie/M/302550700.mp4",
+    "id": "255700" }],
+
+
+  "episodes_count": null,
+  "trailer_urls": [
+  "https://vt1.doubanio.com/202006082020/1a504dcd7a2f68d98968f9d76105b43c/view/movie/M/302570639.mp4",
+  "https://vt1.doubanio.com/202006082020/7d574204affd637847af763f462769fb/view/movie/M/302570301.mp4",
+  "https://vt1.doubanio.com/202006082020/ef2d5e7b0712b45d29f4411e3715e99c/view/movie/M/302560902.mp4",
+  "https://vt1.doubanio.com/202006082020/99f091d298faf984211125e2333bc2f0/view/movie/M/302550700.mp4"],
+
+  "has_ticket": true,
+  "bloopers": [{
+    "medium": "https://img9.doubanio.com/img/trailer/medium/2579217229.jpg?",
+    "title": "花絮",
+    "subject_id": "27000084",
+    "alt": "https://movie.douban.com/trailer/257364/",
+    "small": "https://img9.doubanio.com/img/trailer/small/2579217229.jpg?",
+    "resource_url": "https://vt1.doubanio.com/202006082020/7c94752d3cc713b2550de9005003722f/view/movie/M/302570364.mp4",
+    "id": "257364" },
+
+  {
+    "medium": "https://img9.doubanio.com/img/trailer/medium/2579217799.jpg?",
+    "title": "花絮 (中文字幕)",
+    "subject_id": "27000084",
+    "alt": "https://movie.douban.com/trailer/257365/",
+    "small": "https://img9.doubanio.com/img/trailer/small/2579217799.jpg?",
+    "resource_url": "https://vt1.doubanio.com/202006082020/769f7998a2c1d050b64c76922779baed/view/movie/M/302570365.mp4",
+    "id": "257365" },
+
+  {
+    "medium": "https://img9.doubanio.com/img/trailer/medium/2579217655.jpg?",
+    "title": "花絮 (中文字幕)",
+    "subject_id": "27000084",
+    "alt": "https://movie.douban.com/trailer/257366/",
+    "small": "https://img9.doubanio.com/img/trailer/small/2579217655.jpg?",
+    "resource_url": "https://vt1.doubanio.com/202006082020/4bb074dc179569fb0dc58b23a8496ed1/view/movie/M/302570366.mp4",
+    "id": "257366" },
+
+  {
+    "medium": "https://img9.doubanio.com/img/trailer/medium/2579219873.jpg?",
+    "title": "花絮 (中文字幕)",
+    "subject_id": "27000084",
+    "alt": "https://movie.douban.com/trailer/257367/",
+    "small": "https://img9.doubanio.com/img/trailer/small/2579219873.jpg?",
+    "resource_url": "https://vt1.doubanio.com/202006082020/af1cc9c61b084bb16ccadc7d176ca25b/view/movie/M/302570367.mp4",
+    "id": "257367" }],
+
+
+  "clip_urls": [],
+  "current_season": null,
+  "casts": [{
+    "avatars": {
+      "small": "https://img9.doubanio.com/view/celebrity/s_ratio_celebrity/public/p41483.webp",
+      "large": "https://img9.doubanio.com/view/celebrity/s_ratio_celebrity/public/p41483.webp",
+      "medium": "https://img9.doubanio.com/view/celebrity/s_ratio_celebrity/public/p41483.webp" },
+
+    "name_en": "Will Smith",
+    "name": "威尔·史密斯",
+    "alt": "https://movie.douban.com/celebrity/1027138/",
+    "id": "1027138" },
+
+  {
+    "avatars": {
+      "small": "https://img9.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1467942867.09.webp",
+      "large": "https://img9.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1467942867.09.webp",
+      "medium": "https://img9.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1467942867.09.webp" },
+
+    "name_en": "Tom Holland",
+    "name": "汤姆·赫兰德",
+    "alt": "https://movie.douban.com/celebrity/1325351/",
+    "id": "1325351" },
+
+  {
+    "avatars": {
+      "small": "https://img9.doubanio.com/view/celebrity/s_ratio_celebrity/public/p32735.webp",
+      "large": "https://img9.doubanio.com/view/celebrity/s_ratio_celebrity/public/p32735.webp",
+      "medium": "https://img9.doubanio.com/view/celebrity/s_ratio_celebrity/public/p32735.webp" },
+
+    "name_en": "Rashida Jones",
+    "name": "拉什达·琼斯",
+    "alt": "https://movie.douban.com/celebrity/1031815/",
+    "id": "1031815" },
+
+  {
+    "avatars": {
+      "small": "https://img9.doubanio.com/view/celebrity/s_ratio_celebrity/public/p5681.webp",
+      "large": "https://img9.doubanio.com/view/celebrity/s_ratio_celebrity/public/p5681.webp",
+      "medium": "https://img9.doubanio.com/view/celebrity/s_ratio_celebrity/public/p5681.webp" },
+
+    "name_en": "Ben Mendelsohn",
+    "name": "本·门德尔森",
+    "alt": "https://movie.douban.com/celebrity/1000248/",
+    "id": "1000248" }],
+
+
+  "countries": [
+  "美国"],
+
+  "mainland_pubdate": "2020-01-03",
+  "photos": [{
+    "thumb": "https://img9.doubanio.com/view/photo/m/public/p2569899406.webp",
+    "image": "https://img9.doubanio.com/view/photo/l/public/p2569899406.webp",
+    "cover": "https://img9.doubanio.com/view/photo/sqs/public/p2569899406.webp",
+    "alt": "https://movie.douban.com/photos/photo/2569899406/",
+    "id": "2569899406",
+    "icon": "https://img9.doubanio.com/view/photo/s/public/p2569899406.webp" },
+
+  {
+    "thumb": "https://img9.doubanio.com/view/photo/m/public/p2598584219.webp",
+    "image": "https://img9.doubanio.com/view/photo/l/public/p2598584219.webp",
+    "cover": "https://img9.doubanio.com/view/photo/sqs/public/p2598584219.webp",
+    "alt": "https://movie.douban.com/photos/photo/2598584219/",
+    "id": "2598584219",
+    "icon": "https://img9.doubanio.com/view/photo/s/public/p2598584219.webp" },
+
+  {
+    "thumb": "https://img9.doubanio.com/view/photo/m/public/p2594467682.webp",
+    "image": "https://img9.doubanio.com/view/photo/l/public/p2594467682.webp",
+    "cover": "https://img9.doubanio.com/view/photo/sqs/public/p2594467682.webp",
+    "alt": "https://movie.douban.com/photos/photo/2594467682/",
+    "id": "2594467682",
+    "icon": "https://img9.doubanio.com/view/photo/s/public/p2594467682.webp" },
+
+  {
+    "thumb": "https://img9.doubanio.com/view/photo/m/public/p2594467672.webp",
+    "image": "https://img9.doubanio.com/view/photo/l/public/p2594467672.webp",
+    "cover": "https://img9.doubanio.com/view/photo/sqs/public/p2594467672.webp",
+    "alt": "https://movie.douban.com/photos/photo/2594467672/",
+    "id": "2594467672",
+    "icon": "https://img9.doubanio.com/view/photo/s/public/p2594467672.webp" },
+
+  {
+    "thumb": "https://img9.doubanio.com/view/photo/m/public/p2594467656.webp",
+    "image": "https://img9.doubanio.com/view/photo/l/public/p2594467656.webp",
+    "cover": "https://img9.doubanio.com/view/photo/sqs/public/p2594467656.webp",
+    "alt": "https://movie.douban.com/photos/photo/2594467656/",
+    "id": "2594467656",
+    "icon": "https://img9.doubanio.com/view/photo/s/public/p2594467656.webp" },
+
+  {
+    "thumb": "https://img9.doubanio.com/view/photo/m/public/p2594467611.webp",
+    "image": "https://img9.doubanio.com/view/photo/l/public/p2594467611.webp",
+    "cover": "https://img9.doubanio.com/view/photo/sqs/public/p2594467611.webp",
+    "alt": "https://movie.douban.com/photos/photo/2594467611/",
+    "id": "2594467611",
+    "icon": "https://img9.doubanio.com/view/photo/s/public/p2594467611.webp" },
+
+  {
+    "thumb": "https://img9.doubanio.com/view/photo/m/public/p2594467596.webp",
+    "image": "https://img9.doubanio.com/view/photo/l/public/p2594467596.webp",
+    "cover": "https://img9.doubanio.com/view/photo/sqs/public/p2594467596.webp",
+    "alt": "https://movie.douban.com/photos/photo/2594467596/",
+    "id": "2594467596",
+    "icon": "https://img9.doubanio.com/view/photo/s/public/p2594467596.webp" },
+
+  {
+    "thumb": "https://img9.doubanio.com/view/photo/m/public/p2593732892.webp",
+    "image": "https://img9.doubanio.com/view/photo/l/public/p2593732892.webp",
+    "cover": "https://img9.doubanio.com/view/photo/sqs/public/p2593732892.webp",
+    "alt": "https://movie.douban.com/photos/photo/2593732892/",
+    "id": "2593732892",
+    "icon": "https://img9.doubanio.com/view/photo/s/public/p2593732892.webp" },
+
+  {
+    "thumb": "https://img9.doubanio.com/view/photo/m/public/p2593732891.webp",
+    "image": "https://img9.doubanio.com/view/photo/l/public/p2593732891.webp",
+    "cover": "https://img9.doubanio.com/view/photo/sqs/public/p2593732891.webp",
+    "alt": "https://movie.douban.com/photos/photo/2593732891/",
+    "id": "2593732891",
+    "icon": "https://img9.doubanio.com/view/photo/s/public/p2593732891.webp" },
+
+  {
+    "thumb": "https://img9.doubanio.com/view/photo/m/public/p2593732888.webp",
+    "image": "https://img9.doubanio.com/view/photo/l/public/p2593732888.webp",
+    "cover": "https://img9.doubanio.com/view/photo/sqs/public/p2593732888.webp",
+    "alt": "https://movie.douban.com/photos/photo/2593732888/",
+    "id": "2593732888",
+    "icon": "https://img9.doubanio.com/view/photo/s/public/p2593732888.webp" }],
+
+
+  "summary": "兰斯与沃尔特，前者是超级炫酷又迷人的间谍，后者负责发明兰斯使用的各种炫酷小道具。危难当头，他们必须团结一致才能拯救世界。",
+  "clips": [],
+  "subtype": "movie",
+  "directors": [{
+    "avatars": {
+      "small": "https://img9.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1566284127.48.webp",
+      "large": "https://img9.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1566284127.48.webp",
+      "medium": "https://img9.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1566284127.48.webp" },
+
+    "name_en": "Nick Bruno",
+    "name": "尼克·布鲁诺",
+    "alt": "https://movie.douban.com/celebrity/1408895/",
+    "id": "1408895" },
+
+  {
+    "avatars": {
+      "small": "https://img9.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1557994632.66.webp",
+      "large": "https://img9.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1557994632.66.webp",
+      "medium": "https://img9.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1557994632.66.webp" },
+
+    "name_en": "Troy Quane",
+    "name": "特洛伊·奎安",
+    "alt": "https://movie.douban.com/celebrity/1408896/",
+    "id": "1408896" }],
+
+
+  "comments_count": 15007,
+  "popular_reviews": [{
+    "rating": {
+      "max": 5,
+      "value": 2,
+      "min": 0 },
+
+    "title": "又是一部预告骗",
+    "subject_id": "27000084",
+    "author": {
+      "uid": "138190302",
+      "avatar": "https://img9.doubanio.com/icon/user_normal.jpg",
+      "signature": "",
+      "alt": "https://www.douban.com/people/138190302/",
+      "id": "138190302",
+      "name": "Simon" },
+
+    "summary": "第一次看预告的时候被荷兰弟和威尔史密斯的合作吸引了，再加上变成鸽子的噱头，感觉会是不错的片。 没曾想竟然奇烂无比。 本来最大的看点应该是变成鸽子后，如何利用鸽子的身份完成挑战。荷兰弟也说了很多鸽子的...",
+    "alt": "https://movie.douban.com/review/12341246/",
+    "id": "12341246" },
+
+  {
+    "rating": {
+      "max": 5,
+      "value": 4,
+      "min": 0 },
+
+    "title": "多数人被世界改变，少数人则改变世界",
+    "subject_id": "27000084",
+    "author": {
+      "uid": "190777301",
+      "avatar": "https://img9.doubanio.com/icon/u190777301-4.jpg",
+      "signature": "每天更新的公众号：雪夜阳光",
+      "alt": "https://www.douban.com/people/190777301/",
+      "id": "190777301",
+      "name": "雪夜电影" },
+
+    "summary": "我是在1月3日晚上看的《变身特工》，感觉观影体验还不错，我在豆瓣上给这部电影打了四星。 我喜欢这部电影的原因： 一是因为它让我很轻松的笑了，每天紧张工作的我就想找一部好笑的电影让自己好好放松一下； 二是...",
+    "alt": "https://movie.douban.com/review/12145356/",
+    "id": "12145356" },
+
+  {
+    "rating": {
+      "max": 5,
+      "value": 0,
+      "min": 0 },
+
+    "title": "变身特工:我看到了蓝天创作衰竭",
+    "subject_id": "27000084",
+    "author": {
+      "uid": "205792244",
+      "avatar": "https://img9.doubanio.com/icon/u205792244-1.jpg",
+      "signature": "",
+      "alt": "https://www.douban.com/people/205792244/",
+      "id": "205792244",
+      "name": "青妍" },
+
+    "summary": "1威尔史密斯配音的人物一出场，我梦回黑衣人片场。高潮的无人机大战和虚拟现实技术，梦回蜘蛛侠英雄远征。熟悉的背叛误解套路，梦回碟中谍。不会飞的鸽子设定我梦回里约大冒险。门兜反派的机械手，我梦回星战走天...",
+    "alt": "https://movie.douban.com/review/12538146/",
+    "id": "12538146" },
+
+  {
+    "rating": {
+      "max": 5,
+      "value": 4,
+      "min": 0 },
+
+    "title": "坚持爱的正义",
+    "subject_id": "27000084",
+    "author": {
+      "uid": "lonelywood",
+      "avatar": "https://img9.doubanio.com/icon/u2046685-18.jpg",
+      "signature": "mebius ring~",
+      "alt": "https://www.douban.com/people/lonelywood/",
+      "id": "2046685",
+      "name": "猫格九" },
+
+    "summary": "首先说对这部电影总的观感：一部合格的喜剧动画片，我愿意为它走进电影院。 情节是一贯的套路：明星特工兰斯一向秉持以暴制暴，在被反派BOSS诬陷的过程中被迫和geek科学家沃尔特绑定，一路笑料倍出地战胜反派的故...",
+    "alt": "https://movie.douban.com/review/12370986/",
+    "id": "12370986" },
+
+  {
+    "rating": {
+      "max": 5,
+      "value": 3,
+      "min": 0 },
+
+    "title": "变得了的身 变不了的套路",
+    "subject_id": "27000084",
+    "author": {
+      "uid": "57542378",
+      "avatar": "https://img9.doubanio.com/icon/u57542378-10.jpg",
+      "signature": "",
+      "alt": "https://www.douban.com/people/57542378/",
+      "id": "57542378",
+      "name": "梦里诗书" },
+
+    "summary": "文/梦里诗书 特工变身鸽子的包袱，为《变身特工》带来了不少捧腹的笑料，爱与梦想的立意也不乏正能量的导向，然而电影在剧情上却只是沿袭了特工片的旧有套路，中规中矩，似曾相似且过于低龄化的展开，使成片整体...",
+    "alt": "https://movie.douban.com/review/12151147/",
+    "id": "12151147" },
+
+  {
+    "rating": {
+      "max": 5,
+      "value": 4,
+      "min": 0 },
+
+    "title": "合作还是solo",
+    "subject_id": "27000084",
+    "author": {
+      "uid": "135231334",
+      "avatar": "https://img9.doubanio.com/icon/u135231334-3.jpg",
+      "signature": "",
+      "alt": "https://www.douban.com/people/135231334/",
+      "id": "135231334",
+      "name": "山鬼唱九歌" },
+
+    "summary": "废了很大的劲，终于看了这部电影。因为我居住的地方给这部电影很少场次，几乎都在我的工作时间，于是我特地和朋友坐车到离我们比较远的电影院观看。 笑点非常密集，特效也不会让人失望。总而言之，如果想放松看这...",
+    "alt": "https://movie.douban.com/review/12151895/",
+    "id": "12151895" },
+
+  {
+    "rating": {
+      "max": 5,
+      "value": 4,
+      "min": 0 },
+
+    "title": "鸽子蛋最后去了哪里？",
+    "subject_id": "27000084",
+    "author": {
+      "uid": "Quester",
+      "avatar": "https://img9.doubanio.com/icon/u2946724-3.jpg",
+      "signature": "有趣便来，无趣请走~",
+      "alt": "https://www.douban.com/people/Quester/",
+      "id": "2946724",
+      "name": "Quester" },
+
+    "summary": "这其实是一部鸟类基因明显的动画片，基本上都是《里约大冒险》和《冰河世纪》的班底，故事版艺术家有些做过《疯狂的小鸟》。那么在表现鸟类这方面应该是让人放心的的了，但是对于人物的设定就让人有些担心，毕竟...",
+    "alt": "https://movie.douban.com/review/12162260/",
+    "id": "12162260" },
+
+  {
+    "rating": {
+      "max": 5,
+      "value": 3,
+      "min": 0 },
+
+    "title": "如何把特工电影做崩",
+    "subject_id": "27000084",
+    "author": {
+      "uid": "129569938",
+      "avatar": "https://img9.doubanio.com/icon/u129569938-2.jpg",
+      "signature": "",
+      "alt": "https://www.douban.com/people/129569938/",
+      "id": "129569938",
+      "name": "晓月华" },
+
+    "summary": "看的时候就一直在三星和四星之间反复横跳，看到最后看得我给二星的心都有了 先说说好的方面，制作真的很足，追逐戏超爽，令人耳目一新的特工道具，整体有较稳的主题思想。 但！观影体验随时间的推移一直呈下降趋...",
+    "alt": "https://movie.douban.com/review/12648103/",
+    "id": "12648103" },
+
+  {
+    "rating": {
+      "max": 5,
+      "value": 4,
+      "min": 0 },
+
+    "title": "开心一下",
+    "subject_id": "27000084",
+    "author": {
+      "uid": "161523318",
+      "avatar": "https://img9.doubanio.com/icon/u161523318-2.jpg",
+      "signature": "",
+      "alt": "https://www.douban.com/people/161523318/",
+      "id": "161523318",
+      "name": "KIWI Queen" },
+
+    "summary": "本来就冲着放松娱乐的目的去的，看下来也的确达到了预想效果。整部片子节奏挺流畅的，有几处笑点挺密集，真实逗乐了我，害增长了不少关于鸽子的（奇怪）知识哈哈哈 配音的史皇和荷兰弟绝对是亮点即招牌，感觉两人...",
+    "alt": "https://movie.douban.com/review/12638051/",
+    "id": "12638051" },
+
+  {
+    "rating": {
+      "max": 5,
+      "value": 5,
+      "min": 0 },
+
+    "title": "好看！！！宣传做的太少了！",
+    "subject_id": "27000084",
+    "author": {
+      "uid": "164188696",
+      "avatar": "https://img9.doubanio.com/icon/u164188696-1.jpg",
+      "signature": "",
+      "alt": "https://www.douban.com/people/164188696/",
+      "id": "164188696",
+      "name": "Z_AZ" },
+
+    "summary": "无敌搞笑好看！！！以后别的厂没办法做特工主题了，立意很高 。设计想法都很棒！宣传太少了！！去的都是家长带小朋友。大家都看的很开心， 真的是宣传太少了。太好看了！goooooooooooooooooooooooooooooooooooooo...",
+    "alt": "https://movie.douban.com/review/12637854/",
+    "id": "12637854" }],
+
+
+  "ratings_count": 47514,
+  "aka": [
+  "变雀特工(港)",
+  "变身特务(台)",
+  "百变间谍王",
+  "飞鸽特工队",
+  "伪装间谍",
+  "间谍伪装",
+  "鸽中谍"] };var _default =
+
+
+
+{
+  subject: subject };exports.default = _default;
+
+/***/ }),
 /* 49 */,
 /* 50 */,
 /* 51 */,
@@ -9208,7 +10637,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /* 63 */,
 /* 64 */,
 /* 65 */,
-/* 66 */
+/* 66 */,
+/* 67 */,
+/* 68 */
 /*!*********************************************************************************!*\
   !*** /Users/ry09iu/Documents/web-dev/uni-app/NancyMovie/cool/ui/utils/index.js ***!
   \*********************************************************************************/

@@ -32,13 +32,13 @@ export default {
 			default: 'line'
 		},
 		value: {
-			type: Number,
-			default: 0,
+			type: [Number, String],
+			default: '',
 			required: true
 		},
 		strokeWidth: {
 			type: Number,
-			default: 12
+			default: 8
 		},
 		showText: {
 			type: Boolean,

@@ -1,1 +1,1 @@
-<view>123</view>
+<cl-icon class="star" vue-id="2e637200-1" name="cl-icon-favor-fill" size="{{2}}" color="#686868" bind:__l="__l"></cl-icon>

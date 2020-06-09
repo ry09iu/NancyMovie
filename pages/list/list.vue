@@ -1,9 +1,13 @@
 <template>
-	<view>123</view>
+	<cl-icon class="star" name="cl-icon-favor-fill" :size="2" color="#686868"></cl-icon>
 </template>
 
 <script>
 </script>
 
-<style>
+<style lang="scss">
+		
+	.star {
+		font-size: 10px;
+	}
 </style>

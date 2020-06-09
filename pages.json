@@ -9,6 +9,12 @@
 		"style": {
 			"navigationBarTitleText": "发现"
 		}
+	}, {
+		"path": "pages/detail/detail",
+		"style": {
+			"navigationBarTitleText": "影片详情",
+			"navigationBarBackgroundColor": "#f1f4f5"
+		}
 	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

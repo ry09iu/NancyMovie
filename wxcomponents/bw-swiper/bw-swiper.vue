@@ -24,7 +24,7 @@
 				</view>
 				<view class="swiper-item-footer">
 					<text class="footer-name">{{item[textKey]}}</text>
-					<cl-rate class="footer-rate" :value="item.rating/2" size="32" color="#F9b513" show-text disabled></cl-rate>
+					<cl-rate class="footer-rate" :value="item.rating/2" :size="26" color="#44BB56" :rateWidth="16" show-text disabled></cl-rate>
 					<view class="footer-info">
 						<text v-for="(i, index) in item.genres" :key="index">{{i+'/ '}}</text>
 						<text>{{' 片长'+item.durations[0] + '/ '}}</text>
@@ -181,10 +181,12 @@
 		},
 		methods: {
 			getPubdates: function(pubdates) {
-				if (pubdates.length === 1) return pubdates;
-				let date = pubdates.filter(i => i.indexOf('中国大陆') > -1);
-				if (date && date.length > 0) return date[0].replace("(", "（").replace(")", "）");
-				return pubdates[0];
+				if (pubdates) {
+					if (pubdates.length === 1) return pubdates;
+					let date = pubdates.filter(i => i.indexOf('中国大陆') > -1);
+					if (date && date.length > 0) return date[0].replace("(", "（").replace(")", "）");
+					return pubdates[0];
+				}
 			},
 			play: function() {
 				this.flag = false

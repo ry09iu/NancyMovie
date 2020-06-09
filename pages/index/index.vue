@@ -5,7 +5,7 @@
 			</cl-search>
 			<view class="header-swiper" :style="{'height':headerSwiperHeight}">
 				<bw-swiper :swiperList="swiperList" style="width:100%" swiperType w_h="0.675" :previousMargin="previousMargin"
-				 :nextMargin="nextMargin"></bw-swiper>
+				 :nextMargin="nextMargin" @clickItem="showDetail"></bw-swiper>
 			</view>
 		</view>
 
@@ -46,7 +46,7 @@
 				}]
 			}
 		},
-		created: function() {
+		async onLoad() {
 			this.getWindowHeight();
 			let list = mockData.inTheatersList.subjects;
 			let swiperData = [];
@@ -90,6 +90,12 @@
 			// });
 		},
 		methods: {
+			showDetail(item) {
+				console.log("item", item);
+				uni.navigateTo({
+					url: "/pages/detail/detail?id=" + item.id
+				});
+			},
 			getWindowHeight() {
 				let _this = this;
 				uni.getSystemInfo({
