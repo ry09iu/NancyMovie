@@ -151,11 +151,6 @@ export default {
 		this.$on("tabs.addPane", (data) => {
 			this.list.push(data);
 		});
-		// if (process.env.VUE_APP_PLATFORM === 'h5') {
-		// 	this.stickyTop= '80rpx';
-		// } else {
-		// 	this.stickyTop = '0';
-		// }
 	},
 
 	mounted() {
@@ -183,7 +178,7 @@ export default {
 					flag = fn;
 				}
 			}
-
+			
 			if (flag) {
 				this.$emit("input", name);
 				this.$emit("tab-change", name);

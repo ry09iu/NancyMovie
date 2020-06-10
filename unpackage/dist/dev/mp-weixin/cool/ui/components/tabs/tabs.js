@@ -265,11 +265,6 @@ var _utils = __webpack_require__(/*! ../../utils */ 71);function _interopRequire
     this.$on("tabs.addPane", function (data) {
       _this2.list.push(data);
     });
-    // if (process.env.VUE_APP_PLATFORM === 'h5') {
-    // 	this.stickyTop= '80rpx';
-    // } else {
-    // 	this.stickyTop = '0';
-    // }
   },
 
   mounted: function mounted() {

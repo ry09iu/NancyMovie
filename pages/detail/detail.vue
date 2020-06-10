@@ -50,8 +50,8 @@
 			</view>
 
 		</view>
-		<view class="content">
-			<cl-tabs v-model="tabIndex" type="swiper" :stickyTop="stickyTop" :labels="labels">
+		<view class="content" :style="{'height':contentHeight+'px'}">
+			<cl-tabs v-model="tabIndex" type="swiper" :stickyTop="stickyTop" :labels="labels" @input="change">
 				<template v-slot="{ index, item }">
 					<view v-if="item.value===0" class="intro">
 						<view class="summary">
@@ -91,7 +91,8 @@
 								<image :src="item.author.avatar" mode=""></image>
 								<view class="review-info">
 									<view class="review-author">{{item.author.name}}</view>
-									<cl-rate class="review-info-rate" :value="item.rating.value/2" :size="16" :rateWidth="6" color="#44BB56" disabled></cl-rate>
+									<cl-rate class="review-info-rate" :value="item.rating.value/2" :size="16" :rateWidth="6" color="#44BB56"
+									 disabled></cl-rate>
 								</view>
 							</view>
 							<view class="review-title">{{item.title}}</view>
@@ -127,6 +128,7 @@
 
 <script>
 	import clRate from '@/cool/ui/components/rate/rate.vue'
+	import clTabs from '@/cool/ui/components/tabs/tabs.vue'
 	import mockSubData from '@/data/subject.js'
 	import mockReviewsData from '@/data/reviews.js'
 	export default {
@@ -141,7 +143,10 @@
 				subjectImg: '',
 				rateList: '',
 				reviewsData: '',
-				tabIndex: 2,
+				reviewsHeight: 0,
+				introHeight: 0,
+				contentHeight: 420,
+				tabIndex: 0,
 				labels: [{
 						label: "简介",
 						value: 0
@@ -205,8 +210,42 @@
 			this.labels[0].data = this.subjectData;
 			this.labels[2].data = this.reviewsData;
 			console.log("this.labels", this.labels);
-		},
-		methods: {}
+			
+		}, 
+		methods: {
+			change(index) {
+				// 动态切换 swiper 的高度, 小程序无效。。
+				let __this = this;
+				switch (index) {
+					case 0:
+						__this.contentHeight = 420;
+						break;
+					case 1:
+						__this.setSwiperHeight('.announce');
+						break;
+					case 2:
+						__this.setSwiperHeight('.review');
+						break;
+					case 3:
+						__this.setSwiperHeight('.comment');
+						break;
+					case 4:
+						__this.setSwiperHeight('.other');
+						break;
+					default:
+						break;
+				}
+			},
+			setSwiperHeight(element) {
+				let __this = this;
+				setTimeout(() => {
+					const query = uni.createSelectorQuery().in(__this);
+					query.select(element).boundingClientRect(data => {
+						__this.contentHeight = data.height;
+					}).exec();
+				}, 500);
+			}
+		}
 	}
 </script>
 
