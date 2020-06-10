@@ -115,7 +115,24 @@
 						</view>
 					</view>
 					<view v-if="item.value===3" class="comment">
-						<text>{{subjectData.summary + '-' + item.label}}</text>
+						<view class="comment-item" v-for="item in item.data" :key="item.id">
+							<view class="comment-header">
+								<image :src="item.author.avatar" mode=""></image>
+								<view class="comment-info">
+									<view class="comment-author">{{item.author.name}}</view>
+									<cl-rate class="comment-info-rate" :value="item.rating.value/2" :size="16" :rateWidth="6" color="#44BB56"
+									 disabled></cl-rate>
+								</view>
+							</view>
+							<view class="comment-summary">{{item.content}}</view>
+							<view class="comment-footer">
+								<view>
+									<image src="../../static/images/detail/useful.png" mode=""></image>
+									<text>{{item.useful_count}}</text>
+								</view>
+								<text class="comment-at">{{item.created_at}}</text>
+							</view>
+						</view>
 					</view>
 					<view v-if="item.value===4" class="other">
 						<text>{{JSON.stringify(subjectData) + '-' + item.label}}</text>
@@ -128,9 +145,9 @@
 
 <script>
 	import clRate from '@/cool/ui/components/rate/rate.vue'
-	import clTabs from '@/cool/ui/components/tabs/tabs.vue'
 	import mockSubData from '@/data/subject.js'
 	import mockReviewsData from '@/data/reviews.js'
+	import mockCommentsData from '@/data/comments.js'
 	export default {
 		components: {
 			clRate
@@ -144,9 +161,11 @@
 				rateList: '',
 				reviewsData: '',
 				reviewsHeight: 0,
+				commentsData: '',
+				commentsHeight: 0,
 				introHeight: 0,
 				contentHeight: 420,
-				tabIndex: 0,
+				tabIndex: 3,
 				labels: [{
 						label: "简介",
 						value: 0
@@ -162,21 +181,22 @@
 					{
 						label: "讨论",
 						value: 3
-					},
-					{
-						label: "其他",
-						value: 4
 					}
 				]
 			}
 		},
 		async onLoad(options) {
-			// v2/movie/subject
+
 			console.log('subject_id', options.id);
 			if (this.$apiSource === 0) {
+				// 简介
 				this.subjectData = mockSubData.subject;
+				// 影评, /v2/movie/subject/:id/reviews
+				this.reviewsData = mockReviewsData.reviews.reviews;
+				// 影评, /v2/movie/subject/:id/comments
+				this.commentsData = mockCommentsData.comments.comments;
 			}
-			console.log('subjectData', this.subjectData);
+
 			if (this.subjectData.images.large.indexOf("s_ratio_poster") > -1) {
 				this.subjectImg = this.subjectData.images.large.replace("s_ratio_poster", "l_ratio_poster").replace(".webp",
 					".jpg");
@@ -203,15 +223,17 @@
 				this.stickyTop = 0;
 			}
 
-			// 影评
-			this.reviewsData = mockReviewsData.reviews.reviews;
+			console.log('subjectData', this.subjectData);
 			console.log('reviewsData', this.reviewsData);
+			console.log('commentsData', this.commentsData);
+
 
 			this.labels[0].data = this.subjectData;
 			this.labels[2].data = this.reviewsData;
+			this.labels[3].data = this.commentsData;
 			console.log("this.labels", this.labels);
-			
-		}, 
+
+		},
 		methods: {
 			change(index) {
 				// 动态切换 swiper 的高度, 小程序无效。。

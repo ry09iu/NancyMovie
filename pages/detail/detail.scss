@@ -263,11 +263,11 @@
 	color: #B1B1B1;
 }
 
-.review {
+.review, .comment {
 	padding-bottom: 32rpx;
 }
 
-.review-item {
+.review-item, .comment-item {
 	padding: 20rpx 32rpx 32rpx;
 	
 	&:first-child {
@@ -275,24 +275,24 @@
 	}
 }
 
-.review-header {
+.review-header, .comment-header {
 	display: flex;
 	font-size: 22rpx;
 	font-weight: bolder;
 }
 
-.review-header image {
+.review-header image, .comment-header image {
 	width: 48rpx;
 	height: 48rpx;
 	border-radius: 24rpx;
 }
 
-.review-author {
+.review-author, .comment-author {
 	height: 32rpx;
 	line-height: 32rpx;
 }
 
-.review-info {
+.review-info, .comment-info {
 	margin-top: -2rpx;
 	margin-left: 12rpx;
 	height: 48rpx;
@@ -304,13 +304,13 @@
 	font-weight: bolder;
 }
 
-.review-summary {
+.review-summary, .comment-summary {
 	margin: 20rpx 0;
 	font-size: 26rpx;
 	line-height: 1.5;
 }
 
-.review-footer view image {
+.review-footer view image, .comment-footer view image {
 	width: 28rpx;
 	height: 28rpx;
 }
@@ -323,22 +323,30 @@
 	margin-top: 6rpx;
 }
 
-.review-footer text {
+.comment-footer view:nth-child(1) image {
+	margin-bottom: 4rpx;
+}
+
+.comment-footer view:nth-child(2) image {
+	margin-top: 6rpx;
+}
+
+.review-footer text, .comment-footer text {
 	margin-left: 8rpx;
 	font-size: 24rpx;
 	color: #B1B1B1;
 }
 	
-.review-at {
+.review-at, .comment-at {
 	position: absolute;
 	right: 16px;
 }
 
-.review-footer {
+.review-footer, .comment-footer {
 	display: flex;
 }
 
-.review-footer view {
+.review-footer view, .comment-footer view {
 	display: flex;
 	align-items: center;
 	margin: 0 20rpx;
