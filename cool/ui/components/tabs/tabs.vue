@@ -4,6 +4,7 @@
 			class="cl-tabs__bar"
 			:style="{
 				top: stickyTop,
+				borderRadius: isSticky && 'none'
 			}"
 			scroll-with-animation
 			scroll-x
@@ -95,7 +96,10 @@ export default {
 		// 是否懒加载
 		lazy: Boolean,
 		// 是否吸顶
-		sticky: Boolean,
+		sticky: {
+			type: Boolean,
+			default: true
+		},
 		// 吸顶顶部距离
 		stickyTop: {
 			type: [Number],
@@ -114,7 +118,7 @@ export default {
 		return {
 			list: [],
 			scrollLeft: 0,
-			current: 0,
+			current: 0
 		};
 	},
 
@@ -147,6 +151,11 @@ export default {
 		this.$on("tabs.addPane", (data) => {
 			this.list.push(data);
 		});
+		// if (process.env.VUE_APP_PLATFORM === 'h5') {
+		// 	this.stickyTop= '80rpx';
+		// } else {
+		// 	this.stickyTop = '0';
+		// }
 	},
 
 	mounted() {

@@ -94,7 +94,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   clIcon: function() {
-    return Promise.all(/*! import() | cool/ui/components/icon/icon */[__webpack_require__.e("common/vendor"), __webpack_require__.e("cool/ui/components/icon/icon")]).then(__webpack_require__.bind(null, /*! @/cool/ui/components/icon/icon.vue */ 65))
+    return Promise.all(/*! import() | cool/ui/components/icon/icon */[__webpack_require__.e("common/vendor"), __webpack_require__.e("cool/ui/components/icon/icon")]).then(__webpack_require__.bind(null, /*! @/cool/ui/components/icon/icon.vue */ 66))
   }
 }
 var render = function() {

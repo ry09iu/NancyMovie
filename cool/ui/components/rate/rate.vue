@@ -1,5 +1,9 @@
 <template>
 	<view class="cl-rate">
+		<view class="cl-rate__text cl-rate__text-left" v-if="showLeftText">
+			{{ value2 * 2 }}
+		</view>
+		
 		<view class="cl-rate__icon" v-for="(item, index) in list" :key="index" @tap="onTap(index)" :style="{'width':rateWidth+'px !important'}">
 			<cl-icon :name="icon" :size="size" :color="voidColor"></cl-icon>
 
@@ -53,6 +57,10 @@
 				default: false
 			},
 			showText: {
+				type: Boolean,
+				default: false
+			},
+			showLeftText: {
 				type: Boolean,
 				default: false
 			},

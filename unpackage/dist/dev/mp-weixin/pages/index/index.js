@@ -94,7 +94,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   clSearch: function() {
-    return __webpack_require__.e(/*! import() | cool/ui/components/search/search */ "cool/ui/components/search/search").then(__webpack_require__.bind(null, /*! @/cool/ui/components/search/search.vue */ 53))
+    return __webpack_require__.e(/*! import() | cool/ui/components/search/search */ "cool/ui/components/search/search").then(__webpack_require__.bind(null, /*! @/cool/ui/components/search/search.vue */ 54))
   }
 }
 var render = function() {
@@ -156,7 +156,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var _index = _interopRequireDefault(__webpack_require__(/*! @/utils/luch-request/index.js */ 20));
-var _in_theaters = _interopRequireDefault(__webpack_require__(/*! @/data/in_theaters.js */ 33));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var bwSwiper = function bwSwiper() {__webpack_require__.e(/*! require.ensure | wxcomponents/bw-swiper/bw-swiper */ "wxcomponents/bw-swiper/bw-swiper").then((function () {return resolve(__webpack_require__(/*! @/wxcomponents/bw-swiper/bw-swiper.vue */ 58));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+var _in_theaters = _interopRequireDefault(__webpack_require__(/*! @/data/in_theaters.js */ 33));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var bwSwiper = function bwSwiper() {__webpack_require__.e(/*! require.ensure | wxcomponents/bw-swiper/bw-swiper */ "wxcomponents/bw-swiper/bw-swiper").then((function () {return resolve(__webpack_require__(/*! @/wxcomponents/bw-swiper/bw-swiper.vue */ 59));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 var http = new _index.default();var _default =
 {
   components: {

@@ -24,17 +24,19 @@
 }
 
 .active-background.active {
-	/* 	position: absolute;
-	bottom: 0;
-	left: 0; */
 	width: 112rpx;
 	height: 58rpx;
 	border-radius: 29rpx;
 	background: #eafbed;
 }
 
-// scroll-view
-// .tags .uni-scroll-view-content {
-// 	display: flex;
-// 	width: 150%;
-// }
+.cl-tabs--sticky .cl-tabs__bar {
+	top: 80rpx;
+}
+
+// rate
+.cl-rate__text-left {
+	margin: 0 10rpx 0 0 !important;
+	font-weight: bolder !important;
+	font-size: 26rpx !important;
+}

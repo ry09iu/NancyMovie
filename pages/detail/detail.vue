@@ -34,7 +34,8 @@
 				<view class="header-rate-left">
 					<text class="header-rate-title">豆瓣评分</text>
 					<text class="header-rate-num">{{subjectData.rating.average}}</text>
-					<cl-rate class="header-rate-view" :value="8.4/2" :size="26" :rateWidth="16" color="#44BB56" disabled></cl-rate>
+					<cl-rate class="header-rate-view" :value="subjectData.rating.average/2" :size="26" :rateWidth="16" color="#44BB56"
+					 disabled></cl-rate>
 				</view>
 				<view class="header-rate-right">
 
@@ -50,18 +51,34 @@
 
 		</view>
 		<view class="content">
-			<cl-tabs v-model="tabIndex" type="swiper" :labels="labels">
+			<cl-tabs v-model="tabIndex" type="swiper" :stickyTop="stickyTop" :labels="labels">
 				<template v-slot="{ index, item }">
 					<view v-if="item.value===0" class="intro">
 						<view class="summary">
 							<text>{{item.data.summary}}</text>
 						</view>
 						<view class="classify">相关分类</view>
-						<view class="tags"> 
-							<scroll-view class="tags-scroll" scroll-x="true" scroll-with-animation> 
+						<view class="tags">
+							<scroll-view class="tags-scroll" scroll-x="true" scroll-with-animation>
 								<view class="tags-box" v-for="item in item.data.tags" :key="item">
 									{{item}}
-								</view> 
+								</view>
+							</scroll-view>
+						</view>
+
+						<view class="content-title">演职员</view>
+						<view class="cast-gallery">
+							<scroll-view class="gallery-scroll" scroll-x="true" scroll-with-animation>
+								<view class="gallery-item" v-for="item in item.data.directors" :key="item.id">
+									<image :src="item.avatars.large" mode=""></image>
+									<view class="g-name">{{item.name}}</view>
+									<view class="g-info">导演</view>
+								</view>
+								<view class="gallery-item" v-for="item in item.data.casts" :key="item.id">
+									<image :src="item.avatars.large" mode=""></image>
+									<view class="g-name">{{item.name}}</view>
+									<view class="g-info">演员</view>
+								</view>
 							</scroll-view>
 						</view>
 					</view>
@@ -69,7 +86,32 @@
 						<text>{{subjectData.summary + '-' + item.label}}</text>
 					</view>
 					<view v-if="item.value===2" class="review">
-						<text>{{subjectData.summary + '-' + item.label}}</text>
+						<view class="review-item" v-for="item in item.data" :key="item.id">
+							<view class="review-header">
+								<image :src="item.author.avatar" mode=""></image>
+								<view class="review-info">
+									<view class="review-author">{{item.author.name}}</view>
+									<cl-rate class="review-info-rate" :value="item.rating.value/2" :size="16" :rateWidth="6" color="#44BB56" disabled></cl-rate>
+								</view>
+							</view>
+							<view class="review-title">{{item.title}}</view>
+							<view class="review-summary">{{item.summary}}</view>
+							<view class="review-footer">
+								<view>
+									<image src="../../static/images/detail/useful.png" mode=""></image>
+									<text>{{item.useful_count}}</text>
+								</view>
+								<view>
+									<image src="../../static/images/detail/useless.png" mode=""></image>
+									<text>{{item.useless_count}}</text>
+								</view>
+								<view>
+									<image src="../../static/images/detail/comments.png" mode=""></image>
+									<text>{{item.comments_count}}</text>
+								</view>
+								<text class="review-at">{{item.created_at}}</text>
+							</view>
+						</view>
 					</view>
 					<view v-if="item.value===3" class="comment">
 						<text>{{subjectData.summary + '-' + item.label}}</text>
@@ -84,18 +126,22 @@
 </template>
 
 <script>
-	import mockData from '@/data/subject.js'
+	import clRate from '@/cool/ui/components/rate/rate.vue'
+	import mockSubData from '@/data/subject.js'
+	import mockReviewsData from '@/data/reviews.js'
 	export default {
 		components: {
-
+			clRate
 		},
 		data() {
 			return {
+				stickyTop: 0,
 				summary: 'summary123',
 				subjectData: '',
 				subjectImg: '',
 				rateList: '',
-				tabIndex: 0,
+				reviewsData: '',
+				tabIndex: 2,
 				labels: [{
 						label: "简介",
 						value: 0
@@ -120,10 +166,12 @@
 			}
 		},
 		async onLoad(options) {
+			// v2/movie/subject
 			console.log('subject_id', options.id);
-			this.subjectData = mockData.subject;
+			if (this.$apiSource === 0) {
+				this.subjectData = mockSubData.subject;
+			}
 			console.log('subjectData', this.subjectData);
-			this.labels[0].data = this.subjectData;
 			if (this.subjectData.images.large.indexOf("s_ratio_poster") > -1) {
 				this.subjectImg = this.subjectData.images.large.replace("s_ratio_poster", "l_ratio_poster").replace(".webp",
 					".jpg");
@@ -143,6 +191,20 @@
 			})
 			console.log('rateList', rateList);
 			this.rateList = rateList.reverse();
+
+			if (process.env.VUE_APP_PLATFORM === 'h5') {
+				this.stickyTop = 80;
+			} else {
+				this.stickyTop = 0;
+			}
+
+			// 影评
+			this.reviewsData = mockReviewsData.reviews.reviews;
+			console.log('reviewsData', this.reviewsData);
+
+			this.labels[0].data = this.subjectData;
+			this.labels[2].data = this.reviewsData;
+			console.log("this.labels", this.labels);
 		},
 		methods: {}
 	}

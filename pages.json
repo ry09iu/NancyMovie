@@ -13,7 +13,11 @@
 		"path": "pages/detail/detail",
 		"style": {
 			"navigationBarTitleText": "影片详情",
-			"navigationBarBackgroundColor": "#f1f4f5"
+			"navigationBarBackgroundColor": "#f1f4f5",
+			"app-plus": {
+				//app页面不显示滚动条
+				"scrollIndicator": "none"
+			}
 		}
 	}],
 	"globalStyle": {

@@ -2952,13 +2952,18 @@ cl-button + cl-button {
   border-top-right-radius: 42rpx;
 }
 .active-background.active {
-  /* 	position: absolute;
-	bottom: 0;
-	left: 0; */
   width: 112rpx;
   height: 58rpx;
   border-radius: 29rpx;
   background: #eafbed;
+}
+.cl-tabs--sticky .cl-tabs__bar {
+  top: 80rpx;
+}
+.cl-rate__text-left {
+  margin: 0 10rpx 0 0 !important;
+  font-weight: bolder !important;
+  font-size: 26rpx !important;
 }
 /* 解决头条小程序组件内引入字体不生效的问题 */
 
