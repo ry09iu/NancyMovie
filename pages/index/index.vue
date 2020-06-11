@@ -91,7 +91,6 @@
 		},
 		methods: {
 			showDetail(item) {
-				console.log("item", item);
 				uni.navigateTo({
 					url: "/pages/detail/detail?id=" + item.id
 				});

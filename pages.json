@@ -19,11 +19,12 @@
 				"scrollIndicator": "none"
 			}
 		}
-	}    ,{
-            "path" : "pages/comment/comment",
-            "style" : {}
-        }
-    ],
+	}, {
+		"path": "pages/review/review",
+		"style": {
+			"navigationBarTitleText": "影评详情"
+		}
+	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",

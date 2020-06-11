@@ -302,7 +302,7 @@
   font-size: 22rpx;
   font-weight: bolder;
 }
-.review-header image.data-v-3af93cb7, .comment-header image.data-v-3af93cb7 {
+.review-avatar.data-v-3af93cb7, .comment-header image.data-v-3af93cb7 {
   width: 48rpx;
   height: 48rpx;
   border-radius: 24rpx;
@@ -412,5 +412,11 @@
   height: 48rpx;
   opacity: 0.4;
   z-index: 999;
+}
+.review-more.data-v-3af93cb7 {
+  position: absolute;
+  right: 32rpx;
+  width: 38rpx;
+  height: 38rpx;
 }
 

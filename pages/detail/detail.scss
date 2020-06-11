@@ -281,7 +281,7 @@
 	font-weight: bolder;
 }
 
-.review-header image, .comment-header image {
+.review-avatar, .comment-header image {
 	width: 48rpx;
 	height: 48rpx;
 	border-radius: 24rpx;
@@ -397,4 +397,11 @@
 	height: 48rpx;
 	opacity: 0.4;
 	z-index: 999;
+}
+
+.review-more {
+	position: absolute;
+	right: 32rpx;
+	width: 38rpx;
+	height: 38rpx;
 }

@@ -3,7 +3,7 @@
     "pages/index/index",
     "pages/list/list",
     "pages/detail/detail",
-    "pages/comment/comment"
+    "pages/review/review"
   ],
   "subPackages": [],
   "window": {
@@ -32,5 +32,6 @@
       }
     ]
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap59.json"
 }

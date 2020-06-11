@@ -82,22 +82,23 @@
 							</scroll-view>
 						</view>
 					</view>
-					<view v-if="item.value===1" class="announce">
+<!-- 					<view v-if="item.value===1" class="announce">
 						<view class="announce-item" v-for="(item, index) in item.data" :key="item.id">
 							<video :id="'video-'+index" :src="item.resource_url"></video>
 							<image class="announce-postor" :src="item.medium" mode="" @click="videoPlay(index)"></image>
 							<image class="play-btn" src="@/static/images/detail/play-v2.png" mode="" @click="videoPlay(index)"></image>
 						</view>
-					</view>
-					<view v-if="item.value===2" class="review">
+					</view> -->
+					<view v-if="item.value===1" class="review">
 						<view class="review-item" v-for="item in item.data" :key="item.id">
 							<view class="review-header">
-								<image :src="item.author.avatar" mode=""></image>
+								<image class="review-avatar" :src="item.author.avatar" mode=""></image>
 								<view class="review-info">
 									<view class="review-author">{{item.author.name}}</view>
 									<cl-rate class="review-info-rate" :value="item.rating.value" :size="16" :rateWidth="8" color="#44BB56"
 									 disabled></cl-rate>
 								</view>
+								<image class="review-more" src="@/static/images/detail/more.png" mode=""></image>
 							</view>
 							<view class="review-title">{{item.title}}</view>
 							<view class="review-summary">{{item.summary}}</view>
@@ -118,7 +119,7 @@
 							</view>
 						</view>
 					</view>
-					<view v-if="item.value===3" class="comment">
+					<view v-if="item.value===2" class="comment">
 						<view class="comment-item" v-for="item in item.data" :key="item.id">
 							<view class="comment-header">
 								<image :src="item.author.avatar" mode=""></image>
@@ -138,9 +139,9 @@
 							</view>
 						</view>
 					</view>
-					<view v-if="item.value===4" class="other">
+<!-- 					<view v-if="item.value===4" class="other">
 						<text>{{JSON.stringify(subjectData) + '-' + item.label}}</text>
-					</view>
+					</view> -->
 				</template>
 			</cl-tabs>
 		</view>
@@ -169,22 +170,22 @@
 				commentsHeight: 0,
 				introHeight: 0,
 				contentHeight: 420,
-				tabIndex: 1,
+				tabIndex: 0,
 				labels: [{
 						label: "简介",
 						value: 0
 					},
+					// {
+					// 	label: "预告",
+					// 	value: 1
+					// },
 					{
-						label: "预告",
+						label: "影评",
 						value: 1
 					},
 					{
-						label: "影评",
-						value: 2
-					},
-					{
 						label: "讨论",
-						value: 3
+						value: 2
 					}
 				]
 			}
@@ -233,20 +234,14 @@
 
 
 			this.labels[0].data = this.subjectData;
-			this.labels[1].data = this.subjectData.trailers;
-			this.labels[2].data = this.reviewsData;
-			this.labels[3].data = this.commentsData;
+			// this.labels[1].data = this.subjectData.trailers;
+			this.labels[1].data = this.reviewsData;
+			this.labels[2].data = this.commentsData;
+			
 			console.log("this.labels", this.labels);
 
 		},
 		methods: {
-			videoPlay(index) {
-					console.log('index', index);
-					 this.videoContext = uni.createVideoContext('video-' + index);
-					 console.log('this.videoContext', this.videoContext);
-					 this.videoContext.play();
-					 this.videoContext.requestFullScreen();
-			},
 			change(index) {
 				if(process.env.VUE_APP_PLATFORM === 'mp-weixin') {
 					return;
@@ -257,18 +252,18 @@
 					case 0:
 						__this.contentHeight = 420;
 						break;
+					// case 1:
+					// 	// __this.setSwiperHeight('.announce');
+					// 	break;
 					case 1:
-						// __this.setSwiperHeight('.announce');
-						break;
-					case 2:
 						__this.setSwiperHeight('.review');
 						break;
-					case 3:
+					case 2:
 						__this.setSwiperHeight('.comment');
 						break;
-					case 4:
-						__this.setSwiperHeight('.other');
-						break;
+					// case 4:
+					// 	__this.setSwiperHeight('.other');
+					// 	break;
 					default:
 						break;
 				}
