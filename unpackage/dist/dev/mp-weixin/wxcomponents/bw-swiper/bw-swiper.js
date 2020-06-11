@@ -186,10 +186,12 @@ var _default2 =
     }
   },
   mounted: function mounted() {var _this = this;
-    if (!this.fullScreen) {
+    if (!this.fullScreen && this.swiperList) {
       var query = uni.createSelectorQuery().in(this);
       query.select('.swiper-item').boundingClientRect(function (data) {
-        _this.swiperHeight = data.width / Number(_this.w_h);
+        if (data) {
+          _this.swiperHeight = data.width / Number(_this.w_h);
+        }
       }).exec();
     }
   },
@@ -312,8 +314,20 @@ var _default2 =
       swiperHeight: 300 };
 
   },
-  computed: {},
-
+  watch: {
+    swiperList: function swiperList() {
+      var __this = this;
+      if (!this.fullScreen && this.swiperList) {
+        var query = uni.createSelectorQuery().in(this);
+        setTimeout(function () {
+          query.select('.swiper-item').boundingClientRect(function (data) {
+            if (data) {
+              __this.swiperHeight = data.width / Number(__this.w_h);
+            }
+          }).exec();
+        }, 200);
+      }
+    } },
 
   methods: {
     getPubdates: function getPubdates(pubdates) {

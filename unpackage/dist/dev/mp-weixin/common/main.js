@@ -12,7 +12,7 @@ var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ 5));function 
 
 _vue.default.config.productionTip = false;
 
-_vue.default.prototype.$apiSource = 0; // 0、本地 mock 数据，1、api 数据
+_vue.default.prototype.$apiSource = 1; // 0、本地 mock 数据，1、api 数据
 
 _App.default.mpType = 'app';
 

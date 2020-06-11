@@ -291,10 +291,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 var _subject = _interopRequireDefault(__webpack_require__(/*! @/data/subject.js */ 50));
 var _reviews = _interopRequireDefault(__webpack_require__(/*! @/data/reviews.js */ 51));
-var _comments = _interopRequireDefault(__webpack_require__(/*! @/data/comments.js */ 52));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var clRate = function clRate() {Promise.all(/*! require.ensure | cool/ui/components/rate/rate */[__webpack_require__.e("common/vendor"), __webpack_require__.e("cool/ui/components/rate/rate")]).then((function () {return resolve(__webpack_require__(/*! @/cool/ui/components/rate/rate.vue */ 79));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+var _comments = _interopRequireDefault(__webpack_require__(/*! @/data/comments.js */ 52));
+var _index = _interopRequireDefault(__webpack_require__(/*! @/utils/luch-request/index.js */ 20));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var clRate = function clRate() {Promise.all(/*! require.ensure | cool/ui/components/rate/rate */[__webpack_require__.e("common/vendor"), __webpack_require__.e("cool/ui/components/rate/rate")]).then((function () {return resolve(__webpack_require__(/*! @/cool/ui/components/rate/rate.vue */ 79));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+var http = new _index.default();var _default =
 {
   components: {
     clRate: clRate },
@@ -332,56 +333,78 @@ var _comments = _interopRequireDefault(__webpack_require__(/*! @/data/comments.j
 
 
   },
-  onLoad: function onLoad(options) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var rating, sum, rateList, score;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+  onLoad: function onLoad(options) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var __this, subject, reviews, comments;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+              __this = _this;if (!(
+              _this.$apiSource === 0)) {_context.next = 8;break;}
+              // 简介, /v2/movie/subject/:id
+              _this.subjectData = _subject.default.subject;
+              // 影评, /v2/movie/subject/:id/reviews
+              _this.reviewsData = _reviews.default.reviews.reviews;
+              // 影评, /v2/movie/subject/:id/comments
+              _this.commentsData = _comments.default.comments.comments;
+              _this.handleData();_context.next = 21;break;case 8:_context.next = 10;return (
 
-              console.log('subject_id', options.id);
-              if (_this.$apiSource === 0) {
-                // 简介, /v2/movie/subject/:id
-                _this.subjectData = _subject.default.subject;
-                // 影评, /v2/movie/subject/:id/reviews
-                _this.reviewsData = _reviews.default.reviews.reviews;
-                // 影评, /v2/movie/subject/:id/comments
-                _this.commentsData = _comments.default.comments.comments;
-              }
-
-              if (_this.subjectData.images.large.indexOf("s_ratio_poster") > -1) {
-                _this.subjectImg = _this.subjectData.images.large.replace("s_ratio_poster", "l_ratio_poster").replace(".webp",
-                ".jpg");
-              }
-              rating = _this.subjectData.rating;
-              sum = 0;
-              rateList = [];
-              for (score in rating.details) {
-                sum += rating.details[score];
-                rateList.push({
-                  score: parseInt(score),
-                  scale: rating.details[score] });
-
-              }
-              rateList.forEach(function (item) {
-                item.scale = (item.scale / sum * 100).toFixed(1);
-              });
-              console.log('rateList', rateList);
-              _this.rateList = rateList.reverse();
-
-              if (false) {} else {
-                _this.stickyTop = 0;
-              }
-
-              console.log('subjectData', _this.subjectData);
-              console.log('reviewsData', _this.reviewsData);
-              console.log('commentsData', _this.commentsData);
+                http.get('https://douban-api.uieee.com/v2/movie/subject/' + options.id, {
+                  header: {
+                    "Content-Type": 'json' } }));case 10:subject = _context.sent;
 
 
-              _this.labels[0].data = _this.subjectData;
-              // this.labels[1].data = this.subjectData.trailers;
-              _this.labels[1].data = _this.reviewsData;
-              _this.labels[2].data = _this.commentsData;
+              _this.subjectData = subject.data;_context.next = 14;return (
 
-              console.log("this.labels", _this.labels);case 18:case "end":return _context.stop();}}}, _callee);}))();
+                http.get('https://douban-api.uieee.com/v2/movie/subject/' + options.id + '/reviews', {
+                  header: {
+                    "Content-Type": 'json' } }));case 14:reviews = _context.sent;
+
+
+              _this.reviewsData = reviews.data.reviews;_context.next = 18;return (
+                http.get('https://douban-api.uieee.com/v2/movie/subject/' + options.id + '/comments', {
+                  header: {
+                    "Content-Type": 'json' } }));case 18:comments = _context.sent;
+
+
+              _this.commentsData = comments.data.comments;
+
+              _this.handleData();case 21:case "end":return _context.stop();}}}, _callee);}))();
 
   },
   methods: {
+    handleData: function handleData() {
+      if (this.subjectData.images.large.indexOf("s_ratio_poster") > -1) {
+        this.subjectImg = this.subjectData.images.large.replace("s_ratio_poster", "l_ratio_poster").replace(".webp",
+        ".jpg");
+      }
+      var rating = this.subjectData.rating;
+      var sum = 0;
+      var rateList = [];
+      for (var score in rating.details) {
+        sum += rating.details[score];
+        rateList.push({
+          score: parseInt(score),
+          scale: rating.details[score] });
+
+      }
+      rateList.forEach(function (item) {
+        item.scale = (item.scale / sum * 100).toFixed(1);
+      });
+      console.log('rateList', rateList);
+      this.rateList = rateList.reverse();
+
+      if (false) {} else {
+        this.stickyTop = 0;
+      }
+
+      console.log('subjectData', this.subjectData);
+      console.log('reviewsData', this.reviewsData);
+      console.log('commentsData', this.commentsData);
+
+
+      this.labels[0].data = this.subjectData;
+      // this.labels[1].data = this.subjectData.trailers;
+      this.labels[1].data = this.reviewsData;
+      this.labels[2].data = this.commentsData;
+
+      console.log("this.labels", this.labels);
+    },
     change: function change(index) {
       if (true) {
         return;

@@ -170,62 +170,42 @@ var http = new _index.default();var _default =
       nextMargin: '36px',
       previousMargin: '36px',
       href: 'https://uniapp.dcloud.io/component/README?id=uniui',
-      swiperList: [{
-        img: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg',
-        text: '加油' },
-      {
-        img: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg',
-        text: '加油1' },
-      {
-        img: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg',
-        text: '加油2' }] };
-
+      swiperList: [] };
 
   },
-  onLoad: function onLoad() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var list, swiperData;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
-              _this2.getWindowHeight();
-              list = _in_theaters.default.inTheatersList.subjects;
-              swiperData = [];
-              list.forEach(function (item) {
-                if (item.images.large.indexOf("s_ratio_poster") > -1) {
-                  item.images.large = item.images.large.replace("s_ratio_poster", "l_ratio_poster").replace(".webp", ".jpg");
-                }
-                swiperData.push({
-                  id: item.id,
-                  img: item.images.large,
-                  text: item.title,
-                  rating: item.rating.average,
-                  genres: item.genres,
-                  durations: item.durations,
-                  pubdates: item.pubdates });
+  onLoad: function onLoad() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var subjects;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+              _this2.getWindowHeight();if (!(
+              _this2.$apiSource === 0)) {_context.next = 5;break;}
+              _this2.handleData(_in_theaters.default.inTheatersList.subjects);_context.next = 10;break;case 5:_context.next = 7;return (
 
-              });
-              console.log(swiperData);
-              // swiperData.push({
-              // 	img: "https://img9.doubanio.com/view/photo/l/public/p2578705064.webp",
-              // 	img2: "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2578705064.webp"
-              // 	text: "text2"
-              // })
-              _this2.swiperList = swiperData;
-              // http.get('https://douban-api.uieee.com/v2/movie/in_theaters', {
-              // 	header: {
-              // 		"Content-Type": 'json'
-              // 	}
-              // }).then(res => {
-              // 	console.log('res', res);
-              // 	let list = res.data.subjects;
-              // 	let swiperData = [];
-              // 	list.forEach((item) => {
-              // 		swiperData.push({
-              // 			img: item.images.large,
-              // 			text: item.title
-              // 		})
-              // 	})
-              // 	console.log(swiperData);
-              // 	this.swiperList = swiperData;
-              // });
-            case 6:case "end":return _context.stop();}}}, _callee);}))();},
+                http.get('https://douban-api.uieee.com/v2/movie/in_theaters', {
+                  header: {
+                    "Content-Type": 'json' } }));case 7:subjects = _context.sent;
+
+
+              console.log("subjects", subjects);
+              _this2.handleData(subjects.data.subjects);case 10:case "end":return _context.stop();}}}, _callee);}))();
+
+  },
   methods: {
+    handleData: function handleData(list) {
+      var swiperData = [];
+      list.forEach(function (item) {
+        if (item.images.large.indexOf("s_ratio_poster") > -1) {
+          item.images.large = item.images.large.replace("s_ratio_poster", "l_ratio_poster").replace(".webp", ".jpg");
+        }
+        swiperData.push({
+          id: item.id,
+          img: item.images.large,
+          text: item.title,
+          rating: item.rating.average,
+          genres: item.genres,
+          durations: item.durations,
+          pubdates: item.pubdates });
+
+      });
+      this.swiperList = swiperData;
+    },
     showDetail: function showDetail(item) {
       uni.navigateTo({
         url: "/pages/detail/detail?id=" + item.id });

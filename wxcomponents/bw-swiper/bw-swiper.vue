@@ -50,10 +50,12 @@
 			}
 		},
 		mounted: function() {
-			if (!this.fullScreen) {
+			if (!this.fullScreen && this.swiperList) {
 				const query = uni.createSelectorQuery().in(this);
 				query.select('.swiper-item').boundingClientRect(data => {
-					this.swiperHeight = data.width / Number(this.w_h);
+					if(data) {
+						this.swiperHeight = data.width / Number(this.w_h);
+					}
 				}).exec();
 			}
 		},
@@ -176,8 +178,20 @@
 				swiperHeight: 300
 			}
 		},
-		computed: {
-
+		watch: {
+			swiperList() {
+				let __this = this;
+				if (!this.fullScreen && this.swiperList) {
+					const query = uni.createSelectorQuery().in(this);
+					setTimeout(() => {
+						query.select('.swiper-item').boundingClientRect(data => {
+							if (data) {
+								__this.swiperHeight = data.width / Number(__this.w_h);
+							}
+						}).exec();
+					}, 200);
+				}
+			}
 		},
 		methods: {
 			getPubdates: function(pubdates) {

@@ -34,62 +34,42 @@
 				nextMargin: '36px',
 				previousMargin: '36px',
 				href: 'https://uniapp.dcloud.io/component/README?id=uniui',
-				swiperList: [{
-					img: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg',
-					text: '加油'
-				}, {
-					img: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg',
-					text: '加油1'
-				}, {
-					img: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg',
-					text: '加油2'
-				}]
+				swiperList: []
 			}
 		},
 		async onLoad() {
 			this.getWindowHeight();
-			let list = mockData.inTheatersList.subjects;
-			let swiperData = [];
-			list.forEach((item) => {
-				if (item.images.large.indexOf("s_ratio_poster") > -1) {
-					item.images.large = item.images.large.replace("s_ratio_poster", "l_ratio_poster").replace(".webp", ".jpg");
-				}
-				swiperData.push({
-					id: item.id,
-					img: item.images.large,
-					text: item.title,
-					rating: item.rating.average,
-					genres: item.genres,
-					durations: item.durations,
-					pubdates: item.pubdates
-				})
-			})
-			console.log(swiperData);
-			// swiperData.push({
-			// 	img: "https://img9.doubanio.com/view/photo/l/public/p2578705064.webp",
-			// 	img2: "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2578705064.webp"
-			// 	text: "text2"
-			// })
-			this.swiperList = swiperData;
-			// http.get('https://douban-api.uieee.com/v2/movie/in_theaters', {
-			// 	header: {
-			// 		"Content-Type": 'json'
-			// 	}
-			// }).then(res => {
-			// 	console.log('res', res);
-			// 	let list = res.data.subjects;
-			// 	let swiperData = [];
-			// 	list.forEach((item) => {
-			// 		swiperData.push({
-			// 			img: item.images.large,
-			// 			text: item.title
-			// 		})
-			// 	})
-			// 	console.log(swiperData);
-			// 	this.swiperList = swiperData;
-			// });
+			if (this.$apiSource === 0) {
+				this.handleData(mockData.inTheatersList.subjects);
+			} else {
+				let subjects = await http.get('https://douban-api.uieee.com/v2/movie/in_theaters', {
+					header: {
+						"Content-Type": 'json'
+					}
+				});
+				console.log("subjects", subjects)
+				this.handleData(subjects.data.subjects);
+			}
 		},
 		methods: {
+			handleData(list) {
+				let swiperData = [];
+				list.forEach((item) => {
+					if (item.images.large.indexOf("s_ratio_poster") > -1) {
+						item.images.large = item.images.large.replace("s_ratio_poster", "l_ratio_poster").replace(".webp", ".jpg");
+					}
+					swiperData.push({
+						id: item.id,
+						img: item.images.large,
+						text: item.title,
+						rating: item.rating.average,
+						genres: item.genres,
+						durations: item.durations,
+						pubdates: item.pubdates
+					})
+				})
+				this.swiperList = swiperData;
+			},
 			showDetail(item) {
 				uni.navigateTo({
 					url: "/pages/detail/detail?id=" + item.id

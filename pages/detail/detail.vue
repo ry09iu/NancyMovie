@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view v-cloak>
 		<view class="header">
 			<view class="header-main">
 				<view class="header-left-img">
@@ -33,7 +33,7 @@
 			<view class="header-rate">
 				<view class="header-rate-left">
 					<text class="header-rate-title">豆瓣评分</text>
-					<text class="header-rate-num">{{subjectData.rating.average}}</text>
+					<text class="header-rate-num" v-cloak>{{subjectData.rating.average}}</text>
 					<cl-rate class="header-rate-view" :value="subjectData.rating.average/2" :size="26" :rateWidth="16" color="#44BB56"
 					 disabled></cl-rate>
 				</view>
@@ -48,7 +48,6 @@
 					</view>
 				</view>
 			</view>
-
 		</view>
 		<view class="content" :style="{'height':contentHeight+'px'}">
 			<cl-tabs v-model="tabIndex" type="swiper" :stickyTop="stickyTop" :labels="labels" @input="change">
@@ -82,7 +81,7 @@
 							</scroll-view>
 						</view>
 					</view>
-<!-- 					<view v-if="item.value===1" class="announce">
+					<!-- 					<view v-if="item.value===1" class="announce">
 						<view class="announce-item" v-for="(item, index) in item.data" :key="item.id">
 							<video :id="'video-'+index" :src="item.resource_url"></video>
 							<image class="announce-postor" :src="item.medium" mode="" @click="videoPlay(index)"></image>
@@ -139,7 +138,7 @@
 							</view>
 						</view>
 					</view>
-<!-- 					<view v-if="item.value===4" class="other">
+					<!-- 					<view v-if="item.value===4" class="other">
 						<text>{{JSON.stringify(subjectData) + '-' + item.label}}</text>
 					</view> -->
 				</template>
@@ -153,6 +152,8 @@
 	import mockSubData from '@/data/subject.js'
 	import mockReviewsData from '@/data/reviews.js'
 	import mockCommentsData from '@/data/comments.js'
+	import Request from '@/utils/luch-request/index.js'
+	const http = new Request();
 	export default {
 		components: {
 			clRate
@@ -191,8 +192,7 @@
 			}
 		},
 		async onLoad(options) {
-
-			console.log('subject_id', options.id);
+			let __this = this;
 			if (this.$apiSource === 0) {
 				// 简介, /v2/movie/subject/:id
 				this.subjectData = mockSubData.subject;
@@ -200,50 +200,73 @@
 				this.reviewsData = mockReviewsData.reviews.reviews;
 				// 影评, /v2/movie/subject/:id/comments
 				this.commentsData = mockCommentsData.comments.comments;
-			}
-
-			if (this.subjectData.images.large.indexOf("s_ratio_poster") > -1) {
-				this.subjectImg = this.subjectData.images.large.replace("s_ratio_poster", "l_ratio_poster").replace(".webp",
-					".jpg");
-			}
-			let rating = this.subjectData.rating;
-			let sum = 0;
-			let rateList = [];
-			for (let score in rating.details) {
-				sum += rating.details[score];
-				rateList.push({
-					score: parseInt(score),
-					scale: rating.details[score]
-				})
-			}
-			rateList.forEach(item => {
-				item.scale = ((item.scale / sum) * 100).toFixed(1)
-			})
-			console.log('rateList', rateList);
-			this.rateList = rateList.reverse();
-
-			if (process.env.VUE_APP_PLATFORM === 'h5') {
-				this.stickyTop = 80;
+				this.handleData();
 			} else {
-				this.stickyTop = 0;
-			}
-
-			console.log('subjectData', this.subjectData);
-			console.log('reviewsData', this.reviewsData);
-			console.log('commentsData', this.commentsData);
-
-
-			this.labels[0].data = this.subjectData;
-			// this.labels[1].data = this.subjectData.trailers;
-			this.labels[1].data = this.reviewsData;
-			this.labels[2].data = this.commentsData;
+				let subject = await http.get('https://douban-api.uieee.com/v2/movie/subject/' + options.id, {
+					header: {
+						"Content-Type": 'json'
+					}
+				});
+				this.subjectData = subject.data;
 			
-			console.log("this.labels", this.labels);
-
+				let reviews = await http.get('https://douban-api.uieee.com/v2/movie/subject/' + options.id + '/reviews', {
+					header: {
+						"Content-Type": 'json'
+					}
+				});
+				this.reviewsData = reviews.data.reviews;
+				let comments = await http.get('https://douban-api.uieee.com/v2/movie/subject/' + options.id + '/comments', {
+					header: {
+						"Content-Type": 'json'
+					}
+				});
+				this.commentsData = comments.data.comments;
+				
+				this.handleData();
+			}
 		},
 		methods: {
+			handleData() {
+				if (this.subjectData.images.large.indexOf("s_ratio_poster") > -1) {
+					this.subjectImg = this.subjectData.images.large.replace("s_ratio_poster", "l_ratio_poster").replace(".webp",
+						".jpg");
+				}
+				let rating = this.subjectData.rating;
+				let sum = 0;
+				let rateList = [];
+				for (let score in rating.details) {
+					sum += rating.details[score];
+					rateList.push({
+						score: parseInt(score),
+						scale: rating.details[score]
+					})
+				}
+				rateList.forEach(item => {
+					item.scale = ((item.scale / sum) * 100).toFixed(1)
+				})
+				console.log('rateList', rateList);
+				this.rateList = rateList.reverse();
+
+				if (process.env.VUE_APP_PLATFORM === 'h5') {
+					this.stickyTop = 80;
+				} else {
+					this.stickyTop = 0;
+				}
+
+				console.log('subjectData', this.subjectData);
+				console.log('reviewsData', this.reviewsData);
+				console.log('commentsData', this.commentsData);
+
+
+				this.labels[0].data = this.subjectData;
+				// this.labels[1].data = this.subjectData.trailers;
+				this.labels[1].data = this.reviewsData;
+				this.labels[2].data = this.commentsData;
+
+				console.log("this.labels", this.labels);
+			},
 			change(index) {
-				if(process.env.VUE_APP_PLATFORM === 'mp-weixin') {
+				if (process.env.VUE_APP_PLATFORM === 'mp-weixin') {
 					return;
 				}
 				// 动态切换 swiper 的高度, 小程序无效。。
@@ -252,18 +275,18 @@
 					case 0:
 						__this.contentHeight = 420;
 						break;
-					// case 1:
-					// 	// __this.setSwiperHeight('.announce');
-					// 	break;
+						// case 1:
+						// 	// __this.setSwiperHeight('.announce');
+						// 	break;
 					case 1:
 						__this.setSwiperHeight('.review');
 						break;
 					case 2:
 						__this.setSwiperHeight('.comment');
 						break;
-					// case 4:
-					// 	__this.setSwiperHeight('.other');
-					// 	break;
+						// case 4:
+						// 	__this.setSwiperHeight('.other');
+						// 	break;
 					default:
 						break;
 				}
