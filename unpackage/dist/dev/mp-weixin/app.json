@@ -2,7 +2,8 @@
   "pages": [
     "pages/index/index",
     "pages/list/list",
-    "pages/detail/detail"
+    "pages/detail/detail",
+    "pages/comment/comment"
   ],
   "subPackages": [],
   "window": {
@@ -31,6 +32,5 @@
       }
     ]
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap54.json"
+  "usingComponents": {}
 }

@@ -355,3 +355,46 @@
 		margin-left: 0;
 	}
 }
+
+.announce {
+	display: flex;
+	flex-wrap: wrap;
+	padding: 0 40rpx;
+}
+
+.announce-item {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 10rpx 0;
+	// background: red;
+	border-radius: 28rpx;
+	width: 43vw;
+	height: 24.08vw;
+}
+
+.announce-postor {
+	position: absolute;
+	width: 43vw;
+	height: 24.08vw;
+	border-radius: 18rpx;
+	z-index: 999;
+}
+
+.announce-item video {
+	width: 43vw;
+	height: 24.08vw;
+	border-radius: 20rpx;
+}
+
+.announce-item:nth-child(even) {
+	margin-left: 24rpx;
+}
+
+.play-btn {
+	position: absolute;
+	width: 48rpx;
+	height: 48rpx;
+	opacity: 0.4;
+	z-index: 999;
+}

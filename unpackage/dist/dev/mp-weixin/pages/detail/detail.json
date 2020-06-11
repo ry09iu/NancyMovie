@@ -4,7 +4,6 @@
   "usingComponents": {
     "cl-rate": "/cool/ui/components/rate/rate",
     "cl-progress": "/cool/ui/components/progress/progress",
-    "cl-tabs": "/cool/ui/components/tabs/tabs",
-    "detail-cl-tabs-default": "/pages/detail/detail-cl-tabs-default"
+    "cl-tabs": "/cool/ui/components/tabs/tabs"
   }
 }

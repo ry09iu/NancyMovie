@@ -83,7 +83,11 @@
 						</view>
 					</view>
 					<view v-if="item.value===1" class="announce">
-						<text>{{subjectData.summary + '-' + item.label}}</text>
+						<view class="announce-item" v-for="(item, index) in item.data" :key="item.id">
+							<video :id="'video-'+index" :src="item.resource_url"></video>
+							<image class="announce-postor" :src="item.medium" mode="" @click="videoPlay(index)"></image>
+							<image class="play-btn" src="@/static/images/detail/play-v2.png" mode="" @click="videoPlay(index)"></image>
+						</view>
 					</view>
 					<view v-if="item.value===2" class="review">
 						<view class="review-item" v-for="item in item.data" :key="item.id">
@@ -91,7 +95,7 @@
 								<image :src="item.author.avatar" mode=""></image>
 								<view class="review-info">
 									<view class="review-author">{{item.author.name}}</view>
-									<cl-rate class="review-info-rate" :value="item.rating.value/2" :size="16" :rateWidth="6" color="#44BB56"
+									<cl-rate class="review-info-rate" :value="item.rating.value" :size="16" :rateWidth="8" color="#44BB56"
 									 disabled></cl-rate>
 								</view>
 							</view>
@@ -120,7 +124,7 @@
 								<image :src="item.author.avatar" mode=""></image>
 								<view class="comment-info">
 									<view class="comment-author">{{item.author.name}}</view>
-									<cl-rate class="comment-info-rate" :value="item.rating.value/2" :size="16" :rateWidth="6" color="#44BB56"
+									<cl-rate class="comment-info-rate" :value="item.rating.value" :size="16" :rateWidth="8" color="#44BB56"
 									 disabled></cl-rate>
 								</view>
 							</view>
@@ -165,7 +169,7 @@
 				commentsHeight: 0,
 				introHeight: 0,
 				contentHeight: 420,
-				tabIndex: 3,
+				tabIndex: 1,
 				labels: [{
 						label: "简介",
 						value: 0
@@ -189,7 +193,7 @@
 
 			console.log('subject_id', options.id);
 			if (this.$apiSource === 0) {
-				// 简介
+				// 简介, /v2/movie/subject/:id
 				this.subjectData = mockSubData.subject;
 				// 影评, /v2/movie/subject/:id/reviews
 				this.reviewsData = mockReviewsData.reviews.reviews;
@@ -229,13 +233,24 @@
 
 
 			this.labels[0].data = this.subjectData;
+			this.labels[1].data = this.subjectData.trailers;
 			this.labels[2].data = this.reviewsData;
 			this.labels[3].data = this.commentsData;
 			console.log("this.labels", this.labels);
 
 		},
 		methods: {
+			videoPlay(index) {
+					console.log('index', index);
+					 this.videoContext = uni.createVideoContext('video-' + index);
+					 console.log('this.videoContext', this.videoContext);
+					 this.videoContext.play();
+					 this.videoContext.requestFullScreen();
+			},
 			change(index) {
+				if(process.env.VUE_APP_PLATFORM === 'mp-weixin') {
+					return;
+				}
 				// 动态切换 swiper 的高度, 小程序无效。。
 				let __this = this;
 				switch (index) {
@@ -243,7 +258,7 @@
 						__this.contentHeight = 420;
 						break;
 					case 1:
-						__this.setSwiperHeight('.announce');
+						// __this.setSwiperHeight('.announce');
 						break;
 					case 2:
 						__this.setSwiperHeight('.review');

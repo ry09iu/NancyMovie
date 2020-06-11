@@ -296,6 +296,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
 var _subject = _interopRequireDefault(__webpack_require__(/*! @/data/subject.js */ 50));
 var _reviews = _interopRequireDefault(__webpack_require__(/*! @/data/reviews.js */ 51));
 var _comments = _interopRequireDefault(__webpack_require__(/*! @/data/comments.js */ 111));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var clRate = function clRate() {Promise.all(/*! require.ensure | cool/ui/components/rate/rate */[__webpack_require__.e("common/vendor"), __webpack_require__.e("cool/ui/components/rate/rate")]).then((function () {return resolve(__webpack_require__(/*! @/cool/ui/components/rate/rate.vue */ 72));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
@@ -316,7 +320,7 @@ var _comments = _interopRequireDefault(__webpack_require__(/*! @/data/comments.j
       commentsHeight: 0,
       introHeight: 0,
       contentHeight: 420,
-      tabIndex: 3,
+      tabIndex: 1,
       labels: [{
         label: "简介",
         value: 0 },
@@ -340,7 +344,7 @@ var _comments = _interopRequireDefault(__webpack_require__(/*! @/data/comments.j
 
               console.log('subject_id', options.id);
               if (_this.$apiSource === 0) {
-                // 简介
+                // 简介, /v2/movie/subject/:id
                 _this.subjectData = _subject.default.subject;
                 // 影评, /v2/movie/subject/:id/reviews
                 _this.reviewsData = _reviews.default.reviews.reviews;
@@ -378,13 +382,24 @@ var _comments = _interopRequireDefault(__webpack_require__(/*! @/data/comments.j
 
 
               _this.labels[0].data = _this.subjectData;
+              _this.labels[1].data = _this.subjectData.trailers;
               _this.labels[2].data = _this.reviewsData;
               _this.labels[3].data = _this.commentsData;
-              console.log("this.labels", _this.labels);case 18:case "end":return _context.stop();}}}, _callee);}))();
+              console.log("this.labels", _this.labels);case 19:case "end":return _context.stop();}}}, _callee);}))();
 
   },
   methods: {
+    videoPlay: function videoPlay(index) {
+      console.log('index', index);
+      this.videoContext = uni.createVideoContext('video-' + index);
+      console.log('this.videoContext', this.videoContext);
+      this.videoContext.play();
+      this.videoContext.requestFullScreen();
+    },
     change: function change(index) {
+      if (true) {
+        return;
+      }
       // 动态切换 swiper 的高度, 小程序无效。。
       var __this = this;
       switch (index) {
@@ -392,7 +407,7 @@ var _comments = _interopRequireDefault(__webpack_require__(/*! @/data/comments.j
           __this.contentHeight = 420;
           break;
         case 1:
-          __this.setSwiperHeight('.announce');
+          // __this.setSwiperHeight('.announce');
           break;
         case 2:
           __this.setSwiperHeight('.review');
